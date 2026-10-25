@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zokkora Suite | Automatización y Masterización de Audio para Productores</title>
-  <meta name="description" content="Automatiza la generación por lotes, masteriza a -14 LUFS y gestiona metadatos y certificados legales para tu catálogo musical.">
+  <title>Zokkora Suite | Automatización y Distribución para Productores Musicales</title>
+  <meta name="description" content="Automatiza la generación por lotes, optimización de playlists, normalización a -14 LUFS, portadas y certificados legales.">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -45,7 +45,6 @@
         <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_pricing">Precios</a>
         <a href="#faq" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_faq">FAQ</a>
         
-        <!-- SELECTOR DE IDIOMA -->
         <button id="lang-toggle" onclick="toggleLanguage()" class="text-xs font-semibold px-2.5 py-1 rounded border border-slate-700 bg-slate-800/60 hover:bg-slate-700 transition text-slate-200">
           EN / ES
         </button>
@@ -65,11 +64,10 @@
     </h1>
     
     <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10" data-i18n="hero_desc">
-      Generación por lotes, normalización precisa a -14 LUFS, Artist Identity Kit y certificados legales en PDF. Sin cuentas ni suscripciones obligatorias.
+      Generación en lotes, gestión estratégica de playlists, masterización a -14 LUFS, diseño visual y certificados legales. Sin cuotas mensuales ni dependencia de la nube.
     </p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <!-- BOTÓN DE DESCARGA DIRECTA DE GITHUB -->
       <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.2/Zokkora_1.1.2_x64-setup.exe" 
          class="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium text-sm transition shadow-lg shadow-brand-600/20 text-center">
         <span data-i18n="btn_trial">Descargar Prueba Gratuita</span>
@@ -88,31 +86,55 @@
     </div>
   </section>
 
-  <!-- CARACTERÍSTICAS -->
+  <!-- CARACTERÍSTICAS (6 MÓDULOS) -->
   <section id="features" class="border-t border-slate-800/80 bg-slate-900/20 py-20">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
         <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight" data-i18n="feat_title">Diseñado para alto volumen</h2>
-        <p class="text-slate-400 text-sm mt-2" data-i18n="feat_subtitle">Herramientas nativas construidas para estabilidad y rapidez.</p>
+        <p class="text-slate-400 text-sm mt-2" data-i18n="feat_subtitle">Herramientas nativas construidas para estabilidad, velocidad y control total de tu catálogo.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 01 Lotes -->
         <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
           <div class="text-brand-500 text-sm font-semibold mb-2">01</div>
           <h3 class="text-white font-semibold mb-2" data-i18n="feat_1_title">Lotes y Descarga Masiva</h3>
-          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_1_desc">Automatiza la extracción y organización de tus creaciones sin perder tiempo en clics repetitivos.</p>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_1_desc">Automatiza la extracción, organización y renderizado de tus pistas sin perder tiempo en clics repetitivos manuales.</p>
         </div>
 
+        <!-- 02 Playlists -->
         <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
           <div class="text-brand-500 text-sm font-semibold mb-2">02</div>
-          <h3 class="text-white font-semibold mb-2" data-i18n="feat_2_title">Masterizado a -14 LUFS</h3>
-          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_2_desc">Ajuste de sonoridad integrado para cumplir con los estándares técnicos de Spotify, Apple Music y YouTube.</p>
+          <h3 class="text-white font-semibold mb-2" data-i18n="feat_4_title">Gestor de Playlists y Algoritmo</h3>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_4_desc">Organiza listas temáticas, programa rotación de canciones y calcula duraciones exactas optimizadas para retención algorítmica.</p>
         </div>
 
+        <!-- 03 Masterizado -->
         <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
           <div class="text-brand-500 text-sm font-semibold mb-2">03</div>
+          <h3 class="text-white font-semibold mb-2" data-i18n="feat_2_title">Masterizado a -14 LUFS</h3>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_2_desc">Ajuste de sonoridad integrado para cumplir con los estándares técnicos exactos de Spotify, Apple Music y YouTube.</p>
+        </div>
+
+        <!-- 04 Certificados e Identidad -->
+        <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
+          <div class="text-brand-500 text-sm font-semibold mb-2">04</div>
           <h3 class="text-white font-semibold mb-2" data-i18n="feat_3_title">Artist Kit y Certificados PDF</h3>
-          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_3_desc">Generación instantánea de certificados de propiedad intelectual y plantillas de metadatos en español e inglés.</p>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_3_desc">Generación instantánea de certificados de autoría y propiedad intelectual con plantillas bilingües listas para registro legal.</p>
+        </div>
+
+        <!-- 05 Portadas -->
+        <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
+          <div class="text-brand-500 text-sm font-semibold mb-2">05</div>
+          <h3 class="text-white font-semibold mb-2" data-i18n="feat_5_title">Generador de Portadas & Canvas</h3>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_5_desc">Exporta arte visual en resolución estándar de distribución (3000x3000px) y bucles de video verticales para acompañar tus lanzamientos.</p>
+        </div>
+
+        <!-- 06 Metadatos -->
+        <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
+          <div class="text-brand-500 text-sm font-semibold mb-2">06</div>
+          <h3 class="text-white font-semibold mb-2" data-i18n="feat_6_title">Inyección de Metadatos & ISRC</h3>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_6_desc">Escribe etiquetas ID3 completas, códigos ISRC, derechos de autor y géneros directamente en los archivos MP3 y WAV antes de distribuirlos.</p>
         </div>
       </div>
     </div>
@@ -163,18 +185,16 @@
           <ul class="mt-6 space-y-3 text-sm text-slate-200">
             <li class="flex items-center gap-2 text-brand-300"><span>✓</span> <span data-i18n="pro_item_1">Generación y descargas ilimitadas</span></li>
             <li class="flex items-center gap-2 text-brand-300"><span>✓</span> <strong data-i18n="pro_item_2">Válido para 1 PC (Hardware ID)</strong></li>
-            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="pro_item_3">Sin login ni dependencia de servidores</span></li>
-            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="pro_item_4">Masterización -14 LUFS integrada</span></li>
-            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="pro_item_5">Certificados PDF en español e inglés</span></li>
+            <li class="flex items-center gap-2 text-brand-300"><span>✓</span> <span data-i18n="pro_item_3">Sin login ni dependencia de servidores</span></li>
+            <li class="flex items-center gap-2 text-brand-300"><span>✓</span> <span data-i18n="pro_item_4">Masterización -14 LUFS y Playlists</span></li>
+            <li class="flex items-center gap-2 text-brand-300"><span>✓</span> <span data-i18n="pro_item_5">Certificados PDF en español e inglés</span></li>
           </ul>
 
-          <!-- NOTA OBLIGATORIA DE HARDWARE ID -->
           <div class="mt-6 p-3 rounded-lg bg-black/40 border border-slate-800 text-[11px] text-slate-400 leading-relaxed" data-i18n="license_clause">
             <strong>Condición de licencia:</strong> Cada clave comercial activa el software en un único equipo Windows físico. No requiere cuentas web. Si formateas o cambias de PC, soporte técnico reasigna tu clave.
           </div>
         </div>
 
-        <!-- REEMPLAZAR ESTE ENLACE CON TU CHECKOUT DE LEMON SQUEEZY O PADDLE -->
         <a href="#comprar" class="mt-8 block text-center py-2.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold transition shadow-md shadow-brand-600/30" data-i18n="btn_buy_license">
           Comprar Clave de Licencia
         </a>
@@ -225,7 +245,7 @@
         nav_faq: "FAQ",
         hero_badge: "Versión 1.1.2 Oficial para Windows (x64)",
         hero_title: "Escala tu producción musical con automatización local",
-        hero_desc: "Generación por lotes, normalización precisa a -14 LUFS, Artist Identity Kit y certificados legales en PDF. Sin cuentas ni suscripciones obligatorias.",
+        hero_desc: "Generación en lotes, gestión estratégica de playlists, masterización a -14 LUFS, diseño visual y certificados legales. Sin cuotas mensuales ni dependencia de la nube.",
         btn_trial: "Descargar Prueba Gratuita",
         trial_sub: "10 Canciones / 10 Descargas incluidas",
         btn_buy_now: "Adquirir Licencia Comercial",
@@ -233,13 +253,19 @@
         spec_local: "✓ Procesamiento 100% Local",
         spec_no_account: "✓ Sin registro web",
         feat_title: "Diseñado para alto volumen",
-        feat_subtitle: "Herramientas nativas construidas para estabilidad y rapidez.",
+        feat_subtitle: "Herramientas nativas construidas para estabilidad, velocidad y control total de tu catálogo.",
         feat_1_title: "Lotes y Descarga Masiva",
-        feat_1_desc: "Automatiza la extracción y organización de tus creaciones sin perder tiempo en clics repetitivos.",
+        feat_1_desc: "Automatiza la extracción, organización y renderizado de tus pistas sin perder tiempo en clics repetitivos manuales.",
+        feat_4_title: "Gestor de Playlists y Algoritmo",
+        feat_4_desc: "Organiza listas temáticas, programa rotación de canciones y calcula duraciones exactas optimizadas para retención algorítmica.",
         feat_2_title: "Masterizado a -14 LUFS",
-        feat_2_desc: "Ajuste de sonoridad integrado para cumplir con los estándares técnicos de Spotify, Apple Music y YouTube.",
+        feat_2_desc: "Ajuste de sonoridad integrado para cumplir con los estándares técnicos exactos de Spotify, Apple Music y YouTube.",
         feat_3_title: "Artist Kit y Certificados PDF",
-        feat_3_desc: "Generación instantánea de certificados de propiedad intelectual y plantillas de metadatos en español e inglés.",
+        feat_3_desc: "Generación instantánea de certificados de autoría y propiedad intelectual con plantillas bilingües listas para registro legal.",
+        feat_5_title: "Generador de Portadas & Canvas",
+        feat_5_desc: "Exporta arte visual en resolución estándar de distribución (3000x3000px) y bucles de video verticales para acompañar tus lanzamientos.",
+        feat_6_title: "Inyección de Metadatos & ISRC",
+        feat_6_desc: "Escribe etiquetas ID3 completas, códigos ISRC, derechos de autor y géneros directamente en los archivos MP3 y WAV antes de distribuirlos.",
         price_title: "Licenciamiento Transparente",
         price_subtitle: "Pago único para producción profesional sin límites.",
         plan_free_badge: "Evaluación",
@@ -258,7 +284,7 @@
         pro_item_1: "Generación y descargas ilimitadas",
         pro_item_2: "Válido para 1 PC (Hardware ID)",
         pro_item_3: "Sin login ni dependencia de servidores",
-        pro_item_4: "Masterización -14 LUFS integrada",
+        pro_item_4: "Masterización -14 LUFS y Playlists",
         pro_item_5: "Certificados PDF en español e inglés",
         license_clause: "<strong>Condición de licencia:</strong> Cada clave comercial activa el software en un único equipo Windows físico. No requiere cuentas web. Si formateas o cambias de PC, soporte técnico reasigna tu clave.",
         btn_buy_license: "Comprar Clave de Licencia",
@@ -276,7 +302,7 @@
         nav_faq: "FAQ",
         hero_badge: "Version 1.1.2 Official for Windows (x64)",
         hero_title: "Scale your music production with local automation",
-        hero_desc: "Batch generation, accurate -14 LUFS normalization, Artist Identity Kit, and legal PDF certificates. No accounts or mandatory subscriptions required.",
+        hero_desc: "Batch generation, strategic playlist management, -14 LUFS mastering, visual assets, and legal PDF certificates. Zero monthly fees, zero cloud reliance.",
         btn_trial: "Download Free Trial",
         trial_sub: "10 Songs / 10 Downloads included",
         btn_buy_now: "Get Commercial License",
@@ -284,13 +310,19 @@
         spec_local: "✓ 100% Local Processing",
         spec_no_account: "✓ No web account needed",
         feat_title: "Built for high output",
-        feat_subtitle: "Native tools engineered for rock-solid stability and speed.",
+        feat_subtitle: "Native tools engineered for rock-solid stability, speed, and total catalog control.",
         feat_1_title: "Batch & Mass Download",
-        feat_1_desc: "Automate extraction and file management without wasting hours on repetitive clicking.",
+        feat_1_desc: "Automate extraction, organization, and rendering without wasting hours on repetitive clicking.",
+        feat_4_title: "Playlist Manager & Retention",
+        feat_4_desc: "Curate theme playlists, schedule song rotations, and calculate playback durations engineered for platform algorithms.",
         feat_2_title: "-14 LUFS Mastering",
         feat_2_desc: "Integrated loudness normalization compliant with Spotify, Apple Music, and YouTube audio standards.",
         feat_3_title: "Artist Kit & Legal PDF Certificates",
-        feat_3_desc: "Instant generation of intellectual property certificates and bilingual metadata sheets (EN/ES).",
+        feat_3_desc: "Instant generation of intellectual property certificates and bilingual metadata sheets (EN/ES) ready for registration.",
+        feat_5_title: "Cover Art & Canvas Generator",
+        feat_5_desc: "Export standard distribution artwork (3000x3000px) and vertical looping visuals for your streaming releases.",
+        feat_6_title: "Metadata & ISRC Embedding",
+        feat_6_desc: "Write complete ID3 tags, ISRC codes, copyright credits, and genre data directly into your MP3 and WAV files.",
         price_title: "Transparent Licensing",
         price_subtitle: "One-time payment for unlimited professional workflow.",
         plan_free_badge: "Evaluation",
@@ -309,7 +341,7 @@
         pro_item_1: "Unlimited generation and downloads",
         pro_item_2: "Valid for 1 PC (Hardware ID locked)",
         pro_item_3: "Zero login and no cloud server reliance",
-        pro_item_4: "Integrated -14 LUFS mastering",
+        pro_item_4: "-14 LUFS mastering & Playlist suite",
         pro_item_5: "PDF certificates in English and Spanish",
         license_clause: "<strong>License Terms:</strong> Each commercial key unlocks the software on a single physical Windows PC. No online account required. If you reformat or replace your machine, support reassigns your key.",
         btn_buy_license: "Purchase License Key",
