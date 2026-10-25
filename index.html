@@ -1,463 +1,503 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zokkora Suite - Software de Producción y Distribución Musical IA</title>
-  <meta name="description" content="Software de escritorio profesional para producción musical asistida por IA y automatización para Windows 64-bit.">
   <link rel="icon" type="image/x-icon" href="icon.ico">
+  
+  <title>Zokkora Suite | Estudio de Producción Musical IA & Mastering</title>
+  <meta name="description" content="Automatiza composición en Suno vía Gemini, normaliza a -14 LUFS, aísla stems por IA, emite certificados legales y gestiona playlists de Spotify.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            obsidian: {
+              950: '#060709',
+              900: '#0a0b10',
+              850: '#0f1118',
+              800: '#151722',
+              700: '#222536'
+            },
+            accent: {
+              violet: '#8b5cf6',
+              fuchsia: '#d946ef',
+              cyan: '#06b6d4'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    :root {
-      --bg: #07070b;
-      --card-bg: rgba(18, 17, 28, 0.7);
-      --card-border: rgba(168, 85, 247, 0.15);
-      --purple: #a855f7;
-      --purple-bright: #c084fc;
-      --purple-glow: rgba(168, 85, 247, 0.4);
-      --text: #f3f4f6;
-      --text-muted: #9ca3af;
-      --text-sub: #6b7280;
-      --radius: 14px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      min-height: 100vh;
+      background-color: #060709;
+      color: #e2e8f0;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
       overflow-x: hidden;
-      line-height: 1.6;
+    }
+    .grid-bg {
+      background-size: 40px 40px;
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 60%),
-        radial-gradient(circle at 10% 40%, rgba(126, 34, 206, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 90% 70%, rgba(192, 132, 252, 0.08) 0%, transparent 40%);
-      background-attachment: fixed;
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     }
-
-    /* Navegación */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(16px);
-      background: rgba(7, 7, 11, 0.75);
-      border-bottom: 1px solid var(--card-border);
+    .glow-radial {
+      background: radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.12) 0%, rgba(6, 7, 9, 0) 65%);
     }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .border-subtle {
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: -0.02em;
+    .card-glass {
+      background: rgba(15, 17, 24, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
-
-    .brand img {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      box-shadow: 0 0 12px var(--purple-glow);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-link:hover {
-      color: var(--purple-bright);
-    }
-
-    /* Botones */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.25s ease;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #a855f7, #7e22ce);
-      color: #fff;
-      box-shadow: 0 0 20px var(--purple-glow);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
-      background: linear-gradient(135deg, #c084fc, #9333ea);
-    }
-
-    .btn-outline {
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text);
-      border-color: rgba(255, 255, 255, 0.12);
-    }
-
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: var(--purple-bright);
-    }
-
-    /* Contenedor General */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 1.5rem;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 5rem 1rem 3rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      border-radius: 9999px;
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: var(--purple-bright);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4.2rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.03em;
-    }
-
-    .hero h1 span {
-      background: linear-gradient(135deg, #ffffff 40%, var(--purple-bright));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      max-width: 680px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    /* Features Grid */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin: 4rem 0;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      backdrop-filter: blur(10px);
-      transition: transform 0.25s, border-color 0.25s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(168, 85, 247, 0.4);
-    }
-
-    .card-icon {
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
-      display: inline-block;
-    }
-
-    .card h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.6rem;
-      font-weight: 700;
-    }
-
-    .card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* Sección de Precios */
-    .pricing {
-      padding: 4rem 0;
-      text-align: center;
-    }
-
-    .pricing-card {
-      max-width: 500px;
-      margin: 2.5rem auto 0;
-      background: linear-gradient(180deg, rgba(28, 22, 45, 0.8), rgba(15, 13, 24, 0.9));
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      border-radius: 20px;
-      padding: 3rem 2rem;
-      position: relative;
-      box-shadow: 0 0 50px rgba(168, 85, 247, 0.15);
-    }
-
-    .pricing-card .popular-badge {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #a855f7, #9333ea);
-      color: #fff;
-      padding: 0.35rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      box-shadow: 0 0 15px var(--purple-glow);
-    }
-
-    .price-value {
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: #fff;
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-      gap: 0.25rem;
-      margin: 1.5rem 0 0.5rem;
-      letter-spacing: -0.03em;
-    }
-
-    .price-value span {
-      font-size: 1rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .price-subtitle {
-      color: var(--purple-bright);
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-      font-weight: 600;
-    }
-
-    .pricing-features {
-      list-style: none;
-      text-align: left;
-      margin-bottom: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-
-    .pricing-features li {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .pricing-features li svg {
-      color: var(--purple-bright);
-      flex-shrink: 0;
-    }
-
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--card-border);
-      padding: 3rem 1.5rem;
-      text-align: center;
-      color: var(--text-sub);
-      font-size: 0.9rem;
-    }
-
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    footer a:hover {
-      color: var(--purple-bright);
-    }
-
-    @media (max-width: 640px) {
-      .nav-links {
-        display: none;
-      }
-      .pricing-card {
-        padding: 2.5rem 1.5rem;
-      }
+    .card-glass:hover {
+      border-color: rgba(139, 92, 246, 0.3);
     }
   </style>
 </head>
-<body>
+<body class="selection:bg-accent-violet selection:text-white grid-bg">
 
-  <!-- Navegación -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="brand">
-        <img src="icon.ico" alt="Zokkora Suite Logo">
-        <span>Zokkora Suite</span>
+  <!-- Glow superior -->
+  <div class="fixed top-0 left-0 right-0 h-96 glow-radial pointer-events-none z-0"></div>
+
+  <!-- NAVEGACIÓN TÉCNICA -->
+  <header class="sticky top-0 z-50 border-b border-white/[0.06] bg-obsidian-950/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      
+      <!-- Identidad -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="h-9 w-9 rounded-lg overflow-hidden border border-white/10 bg-obsidian-900 flex items-center justify-center p-1 group-hover:border-accent-violet/60 transition">
+          <img src="icon.ico" alt="Zokkora Icon" class="w-full h-full object-contain">
+        </div>
+        <div class="flex items-baseline space-x-1.5">
+          <span class="text-base font-extrabold tracking-tight text-white">ZOKKORA</span>
+          <span class="font-mono text-[10px] uppercase tracking-wider text-accent-violet bg-accent-violet/10 border border-accent-violet/20 px-1.5 py-0.5 rounded">SUITE</span>
+        </div>
       </a>
-      <div class="nav-links">
-        <a href="#features" class="nav-link">Características</a>
-        <a href="#pricing" class="nav-link">Licencia</a>
-        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">
-          Comprar $29 USD
+
+      <!-- Enlaces y Selector de Idioma -->
+      <div class="flex items-center space-x-6 text-sm">
+        <nav class="hidden md:flex items-center space-x-6 text-slate-400 font-medium text-xs tracking-wide">
+          <a href="#suite" class="hover:text-white transition" data-i18n="nav_suite">MÓDULOS</a>
+          <a href="#terminal" class="hover:text-white transition" data-i18n="nav_console">CONSOLA</a>
+          <a href="#pipeline" class="hover:text-white transition" data-i18n="nav_pipeline">FLUJO</a>
+          <a href="#pricing" class="hover:text-white transition" data-i18n="nav_license">LICENCIA</a>
+        </nav>
+
+        <button id="lang-toggle" onclick="toggleLanguage()" class="font-mono text-[11px] font-semibold px-2.5 py-1 rounded border border-white/10 bg-obsidian-850 hover:bg-obsidian-800 text-slate-300 transition">
+          EN / ES
+        </button>
+
+        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer" 
+           class="hidden sm:inline-flex items-center font-mono text-xs font-semibold px-4 py-2 rounded-md bg-white text-black hover:bg-slate-200 transition shadow-sm">
+          <span data-i18n="nav_buy_btn">Obtener Clave $29</span>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <main class="container">
-    <section class="hero">
-      <div class="badge">
-        <span>●</span> Versión Windows 64-bit Disponible
+  <!-- HERO SECTION CON TERMINAL / APP MOCKUP -->
+  <section class="relative z-10 max-w-6xl mx-auto px-6 pt-20 pb-16">
+    <div class="text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-obsidian-850 text-xs text-slate-300 mb-6">
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        <span class="font-mono text-[11px] tracking-wide" data-i18n="hero_status">v1.1.2 NATIVA • ARQUITECTURA X64</span>
       </div>
-      <h1>Potencia tu flujo musical con <span>Inteligencia Artificial</span></h1>
-      <p>
-        Optimiza tu catálogo, analiza métricas y administra tus lanzamientos con la suite de escritorio más rápida y potente diseñada para productores y artistas independientes.
+
+      <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-[1.1] mb-6" data-i18n="hero_title">
+        Ingeniería y automatización musical para <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-violet via-purple-300 to-accent-fuchsia">Suno & DAWs</span>
+      </h1>
+
+      <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto mb-8 font-normal leading-relaxed" data-i18n="hero_sub">
+        Generación lírica asistida con Gemini, normalización matemática a -14 LUFS, extracción de stems por red neuronal y contratos PDF para sincronización comercial directa.
       </p>
-      <div class="hero-actions">
-        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          Comprar Licencia Comercial - $29 USD
+
+      <!-- Botones Principales -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer"
+           class="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-accent-violet hover:bg-accent-violet/90 text-white font-semibold text-sm transition shadow-lg shadow-accent-violet/20 flex items-center justify-center gap-2">
+          <span data-i18n="hero_cta_buy">Comprar Licencia Comercial — $29 USD</span>
+          <span class="font-mono text-xs opacity-75">→</span>
         </a>
-        <a href="#pricing" class="btn btn-outline">
-          Ver Detalles de la Licencia
+
+        <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.2/Zokkora_1.1.2_x64-setup.exe"
+           class="w-full sm:w-auto px-6 py-3.5 rounded-lg border border-white/10 hover:border-white/20 bg-obsidian-850 hover:bg-obsidian-800 text-slate-300 font-medium text-sm transition flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <span data-i18n="hero_cta_trial">Descargar Prueba Gratuita (10 Tracks)</span>
         </a>
       </div>
-    </section>
 
-    <!-- Características -->
-    <section id="features" class="features">
-      <div class="card">
-        <div class="card-icon">⚡</div>
-        <h3>Rendimiento Nativo en Windows</h3>
-        <p>Software ligero y optimizado para ejecutarse en segundo plano sin ralentizar tus programas de producción (DAW) o herramientas de audio.</p>
+      <div class="mt-4 font-mono text-[11px] text-slate-500" data-i18n="hero_sub_specs">
+        Ejecución local en segundo plano • Sin subscripciones mensuales • Windows 10/11
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-icon">🔑</div>
-        <h3>Activación Única e Instantánea</h3>
-        <p>Al realizar tu compra, recibes de forma inmediata tu clave de licencia por correo electrónico vinculada al hardware de tu PC (1 activación).</p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">📈</div>
-        <h3>Automatización & Streaming</h3>
-        <p>Herramientas integradas para cálculo de duraciones, gestión masiva de metadatos y distribución eficiente de pistas de audio.</p>
-      </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
-      <h2>Licencia de Pago Único</h2>
-      <p style="color: var(--text-muted); margin-top: 0.5rem;">Sin mensualidades. Adquiere tu clave una sola vez y úsala para siempre.</p>
-
-      <div class="pricing-card">
-        <div class="popular-badge">Acceso de por vida</div>
-        <h3 style="font-size: 1.5rem; font-weight: 700;">Licencia Comercial</h3>
-        <div class="price-value">
-          $29.00 <span>USD</span>
+    <!-- MOCKUP NATIVO DE LA APLICACIÓN -->
+    <div id="terminal" class="mt-16 rounded-xl border border-white/10 bg-obsidian-900 shadow-2xl overflow-hidden">
+      <!-- Barra de título de la ventana -->
+      <div class="h-10 border-b border-white/[0.06] bg-obsidian-950 px-4 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/40"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/40"></span>
+          <span class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/40"></span>
+          <span class="ml-2 font-mono text-[11px] text-slate-400 font-medium">Zokkora Studio Console — Native v1.1.2 [64-bit Engine]</span>
         </div>
-        <div class="price-subtitle">Pago único · Duración ilimitada</div>
+        <div class="flex items-center space-x-3 font-mono text-[11px] text-slate-500">
+          <span>DSP: ONLINE</span>
+          <span class="text-emerald-400">● 44.1 kHz / 16-bit</span>
+        </div>
+      </div>
 
-        <ul class="pricing-features">
-          <li>
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Licencia para 1 PC (Windows 64-bit)
-          </li>
-          <li>
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Activación digital inmediata por correo electrónico
-          </li>
-          <li>
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Uso comercial habilitado
-          </li>
-          <li>
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Actualizaciones incluidas sin cobros periódicos
-          </li>
-          <li>
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            Pago seguro procesado por Lemon Squeezy
-          </li>
-        </ul>
+      <!-- Cuerpo del Mockup -->
+      <div class="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-obsidian-900 font-mono text-xs">
+        
+        <!-- Panel lateral: Métricas de Audio -->
+        <div class="lg:col-span-4 p-4 rounded-lg bg-obsidian-950/60 border border-white/[0.04] space-y-4">
+          <div class="text-[10px] tracking-wider text-slate-400 uppercase font-semibold">Motor de Masterización</div>
+          
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-400">Loudness Integrado:</span>
+              <span class="text-accent-violet font-bold">-14.0 LUFS</span>
+            </div>
+            <div class="w-full bg-obsidian-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-gradient-to-r from-accent-violet to-emerald-400 h-1.5 rounded-full" style="width: 78%"></div>
+            </div>
+          </div>
 
-        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; padding: 1rem;">
-          Obtener Licencia Ahora
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-400">True Peak Ceiling:</span>
+              <span class="text-white font-bold">-1.0 dBFS</span>
+            </div>
+            <div class="w-full bg-obsidian-800 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-accent-fuchsia h-1.5 rounded-full" style="width: 90%"></div>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-white/[0.04] text-[11px] space-y-1.5">
+            <div class="flex justify-between text-slate-400"><span>Hardware ID:</span><span class="text-slate-200">WIN-883F-V1</span></div>
+            <div class="flex justify-between text-slate-400"><span>Licencia:</span><span class="text-emerald-400">Comercial / Lifetime</span></div>
+          </div>
+        </div>
+
+        <!-- Terminal de Procesos y Generación -->
+        <div class="lg:col-span-8 p-4 rounded-lg bg-black/60 border border-white/[0.04] flex flex-col justify-between">
+          <div class="space-y-1.5 text-slate-400 text-[11px] leading-relaxed">
+            <div class="text-slate-500 font-mono">[00:00:12] Gemini Engine conectado vía API. Generando prompt lírico y metadata...</div>
+            <div class="text-slate-300 font-mono">[00:00:14] Suno Parallel Task: 2 stems listos. Descargando WAV 16-bit...</div>
+            <div class="text-accent-violet font-mono">[00:00:16] Stem Separation: [Acapella_Isolated.wav] & [Beat_Instrumental.wav] OK.</div>
+            <div class="text-emerald-400 font-mono">[00:00:18] DSP Mastering: Target -14 LUFS aplicado. Certificado legal emitido #ZK-2026-904.</div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-slate-500">
+            <span>Cola activa: 0 pendientes</span>
+            <span class="text-accent-violet">● Latencia DSP: 18ms</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO GRID DE MÓDULOS -->
+  <section id="suite" class="py-20 max-w-6xl mx-auto px-6">
+    <div class="mb-12">
+      <div class="font-mono text-xs text-accent-violet font-bold tracking-wider uppercase mb-2" data-i18n="bento_badge">ARQUITECTURA DE SUITE</div>
+      <h2 class="text-3xl font-extrabold text-white tracking-tight" data-i18n="bento_title">Herramientas modulares de producción</h2>
+      <p class="text-slate-400 text-sm mt-1" data-i18n="bento_sub">Todo lo que requieres para procesar, legalizar y lanzar música sin salir del ecosistema.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      
+      <!-- Card Grande: Suno + Gemini -->
+      <div class="md:col-span-2 card-glass rounded-xl p-6 relative overflow-hidden">
+        <div class="font-mono text-[10px] text-purple-400 uppercase font-bold tracking-wider mb-2">01 / AUTÓMATA DE CREACIÓN</div>
+        <h3 class="text-xl font-bold text-white mb-2" data-i18n="b1_title">Orquestación Suno + Gemini Flash</h3>
+        <p class="text-slate-400 text-xs leading-relaxed max-w-lg mb-6" data-i18n="b1_desc">
+          Escribe el género o concepto deseado. Gemini redacta las estructuras líricas, instrumentación y etiquetas, lanzando la tarea de generación directamente a tu cuenta local de Suno en paralelo sin intervención manual.
+        </p>
+        <div class="font-mono text-[11px] bg-obsidian-950/80 border border-white/5 p-3 rounded text-slate-300">
+          <code>FORMAT: Single • EP (2-4 Tracks) • LP Álbum | Consumo en tiempo real</code>
+        </div>
+      </div>
+
+      <!-- Card Normal: Mastering -->
+      <div class="card-glass rounded-xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="font-mono text-[10px] text-purple-400 uppercase font-bold tracking-wider mb-2">02 / DSP MASTERING</div>
+          <h3 class="text-lg font-bold text-white mb-2" data-i18n="b2_title">Auto-Mastering -14 LUFS</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="b2_desc">
+            Normalización automática a -14 LUFS integrados y -1.0 dBFS True Peak ceiling. Cumplimiento matemático para Spotify, YouTube y Apple Music sin saturación de onda.
+          </p>
+        </div>
+        <div class="mt-4 font-mono text-[10px] text-slate-500 border-t border-white/5 pt-2">DSP WAV 16-bit 44.1kHz</div>
+      </div>
+
+      <!-- Card Normal: Stems -->
+      <div class="card-glass rounded-xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="font-mono text-[10px] text-purple-400 uppercase font-bold tracking-wider mb-2">03 / STEM SPLITTER</div>
+          <h3 class="text-lg font-bold text-white mb-2" data-i18n="b3_title">Separador IA: Acapella & Beat</h3>
+          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="b3_desc">
+            Red neuronal local para dividir mezclas completas en pista vocal limpia (acapella) e instrumental estéreo (beat). Ideal para remezclas y directos.
+          </p>
+        </div>
+        <div class="mt-4 font-mono text-[10px] text-slate-500 border-t border-white/5 pt-2">Ejecución 100% Offline</div>
+      </div>
+
+      <!-- Card Grande: Fábrica de Playlists y Legal -->
+      <div class="md:col-span-2 card-glass rounded-xl p-6">
+        <div class="font-mono text-[10px] text-purple-400 uppercase font-bold tracking-wider mb-2">04 / DISTRIBUCIÓN & DERECHOS</div>
+        <h3 class="text-xl font-bold text-white mb-2" data-i18n="b4_title">Fábrica de Playlists & Certificados PDF</h3>
+        <p class="text-slate-400 text-xs leading-relaxed max-w-xl mb-4" data-i18n="b4_desc">
+          Arma sesiones de 3 horas combinando tu música con artistas líderes sin repetir canciones. Genera el paquete completo de distribución (WAV, Cover 3000px, metadata.csv) y emite certificados legales de licencia en PDF con código único de registro.
+        </p>
+        <div class="flex flex-wrap gap-2 font-mono text-[10px] text-slate-400">
+          <span class="px-2 py-1 rounded bg-obsidian-900 border border-white/5">DistroKid Ready</span>
+          <span class="px-2 py-1 rounded bg-obsidian-900 border border-white/5">Licencia de Sincronización PDF</span>
+          <span class="px-2 py-1 rounded bg-obsidian-900 border border-white/5">Spotify API Connected</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WORKFLOW MINIMALISTA -->
+  <section id="pipeline" class="py-16 border-t border-white/[0.06] bg-obsidian-950/50">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl font-bold text-white" data-i18n="pipe_title">Pipeline de Producción Local</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-6 font-mono text-xs">
+        <div class="p-4 rounded border border-white/5 bg-obsidian-900">
+          <div class="text-accent-violet font-bold mb-1">01. INGEST</div>
+          <div class="text-white font-medium mb-1">Prompt Lírico</div>
+          <div class="text-slate-400 text-[11px]">Gemini estructura versos, coro y estilo en Suno.</div>
+        </div>
+        <div class="p-4 rounded border border-white/5 bg-obsidian-900">
+          <div class="text-accent-violet font-bold mb-1">02. PROCESS</div>
+          <div class="text-white font-medium mb-1">Normalización DSP</div>
+          <div class="text-slate-400 text-[11px]">-14 LUFS integrados y corte de picos en WAV.</div>
+        </div>
+        <div class="p-4 rounded border border-white/5 bg-obsidian-900">
+          <div class="text-accent-violet font-bold mb-1">03. EXPORT</div>
+          <div class="text-white font-medium mb-1">Package & Legal</div>
+          <div class="text-slate-400 text-[11px]">Artwork HD, metadata CSV y licencia firmada en PDF.</div>
+        </div>
+        <div class="p-4 rounded border border-white/5 bg-obsidian-900">
+          <div class="text-accent-violet font-bold mb-1">04. ROTATE</div>
+          <div class="text-white font-medium mb-1">Spotify Roster</div>
+          <div class="text-slate-400 text-[11px]">Inyección automática en playlists sin duplicados.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING TÉCNICO -->
+  <section id="pricing" class="py-20 max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-extrabold text-white tracking-tight" data-i18n="price_h2">Licenciamiento de Software</h2>
+      <p class="text-slate-400 text-sm mt-1" data-i18n="price_sub">Software de escritorio autónomo. Sin cobros mensuales recurrentes.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+      
+      <!-- Evaluación / Free -->
+      <div class="p-6 rounded-xl border border-white/10 bg-obsidian-900 flex flex-col justify-between">
+        <div>
+          <div class="font-mono text-xs text-slate-400 uppercase font-semibold mb-1" data-i18n="plan_eval_title">Versión de Evaluación</div>
+          <h3 class="text-xl font-bold text-white" data-i18n="plan_eval_name">Prueba Gratuita</h3>
+          <div class="font-mono text-3xl font-extrabold text-white my-3">$0</div>
+          <p class="text-xs text-slate-400 leading-relaxed mb-6" data-i18n="plan_eval_desc">Instala el software en tu PC y evalúa la calidad de masterizado y organización sin registrar tarjeta.</p>
+          
+          <ul class="space-y-2.5 font-mono text-xs text-slate-300">
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="p_f1">Hasta 10 pistas procesadas</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="p_f2">Hasta 10 descargas completas</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="p_f3">Normalización a -14 LUFS activa</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="p_f4">Instalador Windows (x64)</span></li>
+          </ul>
+        </div>
+
+        <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.2/Zokkora_1.1.2_x64-setup.exe"
+           class="mt-8 block text-center py-2.5 rounded font-mono text-xs font-semibold border border-white/10 hover:border-white/20 bg-obsidian-850 hover:bg-obsidian-800 text-white transition" data-i18n="btn_dl_trial_txt">
+          Descargar Instalador (.exe)
         </a>
       </div>
-    </section>
-  </main>
 
-  <!-- Footer -->
-  <footer>
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-      <p>&copy; 2026 Zokkora. Todos los derechos reservados.</p>
-      <div style="display: flex; gap: 1.5rem;">
-        <a href="#">Términos de servicio</a>
-        <a href="#">Política de privacidad</a>
-        <a href="mailto:soporte@zokkora.com">Contacto y soporte</a>
+      <!-- Comercial / Pro -->
+      <div class="p-6 rounded-xl border-2 border-accent-violet bg-obsidian-850 flex flex-col justify-between relative shadow-xl shadow-accent-violet/10">
+        <div class="absolute -top-3 right-6 bg-accent-violet text-white font-mono text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded">
+          HARDWARE ID LOCK
+        </div>
+
+        <div>
+          <div class="font-mono text-xs text-purple-300 uppercase font-semibold mb-1" data-i18n="plan_com_title">Edición Comercial</div>
+          <h3 class="text-xl font-bold text-white" data-i18n="plan_com_name">Licencia Zokkora Suite</h3>
+          <div class="font-mono text-3xl font-extrabold text-white my-3">$29 <span class="text-xs font-normal text-slate-400" data-i18n="plan_com_period">/ pago único</span></div>
+          <p class="text-xs text-purple-200/70 leading-relaxed mb-6" data-i18n="plan_com_desc">Uso comercial ilimitado de por vida para un único equipo de escritorio.</p>
+
+          <ul class="space-y-2.5 font-mono text-xs text-slate-200">
+            <li class="flex items-center gap-2 text-accent-violet"><span>✓</span> <span data-i18n="p_c1">Generación y renderizado ilimitado</span></li>
+            <li class="flex items-center gap-2 text-accent-violet"><span>✓</span> <strong data-i18n="p_c2">1 Activación de Hardware vinculada</strong></li>
+            <li class="flex items-center gap-2 text-accent-violet"><span>✓</span> <span data-i18n="p_c3">Separación de stems por IA ilimitada</span></li>
+            <li class="flex items-center gap-2 text-accent-violet"><span>✓</span> <span data-i18n="p_c4">Fábrica masiva de playlists en Spotify</span></li>
+            <li class="flex items-center gap-2 text-accent-violet"><span>✓</span> <span data-i18n="p_c5">Generador de licencias comerciales en PDF</span></li>
+          </ul>
+
+          <div class="mt-5 p-3 rounded bg-black/40 border border-white/5 font-mono text-[10px] text-slate-400 leading-normal" data-i18n="plan_com_clause">
+            *Reasignación gratuita de clave en caso de formateo o cambio de componentes mediante soporte técnico.
+          </div>
+        </div>
+
+        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer"
+           class="mt-6 block text-center py-3 rounded font-mono text-xs font-bold bg-accent-violet hover:bg-accent-violet/90 text-white transition shadow-lg shadow-accent-violet/30" data-i18n="btn_buy_now_txt">
+          Comprar Licencia Comercial — $29 USD
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER TÉCNICO -->
+  <footer class="border-t border-white/[0.06] py-10 text-xs text-slate-500 bg-obsidian-950">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono">
+      <div class="flex items-center space-x-2">
+        <img src="icon.ico" alt="Zokkora Icon" class="w-5 h-5 rounded">
+        <span>© 2026 Zokkora. Todos los derechos reservados.</span>
+      </div>
+      <div class="flex items-center space-x-6 text-[11px]">
+        <a href="#suite" class="hover:text-slate-300 transition" data-i18n="nav_suite">MÓDULOS</a>
+        <a href="#pricing" class="hover:text-slate-300 transition" data-i18n="nav_license">LICENCIA</a>
+        <span class="text-slate-400">zokkora.com</span>
       </div>
     </div>
   </footer>
 
+  <!-- SCRIPT BILINGÜE COMPLETO -->
+  <script>
+    const translations = {
+      es: {
+        nav_suite: "MÓDULOS",
+        nav_console: "CONSOLA",
+        nav_pipeline: "FLUJO",
+        nav_license: "LICENCIA",
+        nav_buy_btn: "Obtener Clave $29",
+        hero_status: "v1.1.2 NATIVA • ARQUITECTURA X64",
+        hero_title: "Ingeniería y automatización musical para Suno & DAWs",
+        hero_sub: "Generación lírica asistida con Gemini, normalización matemática a -14 LUFS, extracción de stems por red neuronal y contratos PDF para sincronización comercial directa.",
+        hero_cta_buy: "Comprar Licencia Comercial — $29 USD",
+        hero_cta_trial: "Descargar Prueba Gratuita (10 Tracks)",
+        hero_sub_specs: "Ejecución local en segundo plano • Sin subscripciones mensuales • Windows 10/11",
+        bento_badge: "ARQUITECTURA DE SUITE",
+        bento_title: "Herramientas modulares de producción",
+        bento_sub: "Todo lo que requieres para procesar, legalizar y lanzar música sin salir del ecosistema.",
+        b1_title: "Orquestación Suno + Gemini Flash",
+        b1_desc: "Escribe el género o concepto deseado. Gemini redacta las estructuras líricas, instrumentación y etiquetas, lanzando la tarea de generación directamente a tu cuenta local de Suno en paralelo sin intervención manual.",
+        b2_title: "Auto-Mastering -14 LUFS",
+        b2_desc: "Normalización automática a -14 LUFS integrados y -1.0 dBFS True Peak ceiling. Cumplimiento matemático para Spotify, YouTube y Apple Music sin saturación de onda.",
+        b3_title: "Separador IA: Acapella & Beat",
+        b3_desc: "Red neuronal local para dividir mezclas completas en pista vocal limpia (acapella) e instrumental estéreo (beat). Ideal para remezclas y directos.",
+        b4_title: "Fábrica de Playlists & Certificados PDF",
+        b4_desc: "Arma sesiones de 3 horas combinando tu música con artistas líderes sin repetir canciones. Genera el paquete completo de distribución (WAV, Cover 3000px, metadata.csv) y emite certificados legales de licencia en PDF con código único de registro.",
+        pipe_title: "Pipeline de Producción Local",
+        price_h2: "Licenciamiento de Software",
+        price_sub: "Software de escritorio autónomo. Sin cobros mensuales recurrentes.",
+        plan_eval_title: "Versión de Evaluación",
+        plan_eval_name: "Prueba Gratuita",
+        plan_eval_desc: "Instala el software en tu PC y evalúa la calidad de masterizado y organización sin registrar tarjeta.",
+        p_f1: "Hasta 10 pistas procesadas",
+        p_f2: "Hasta 10 descargas completas",
+        p_f3: "Normalización a -14 LUFS activa",
+        p_f4: "Instalador Windows (x64)",
+        btn_dl_trial_txt: "Descargar Instalador (.exe)",
+        plan_com_title: "Edición Comercial",
+        plan_com_name: "Licencia Zokkora Suite",
+        plan_com_period: "/ pago único",
+        plan_com_desc: "Uso comercial ilimitado de por vida para un único equipo de escritorio.",
+        p_c1: "Generación y renderizado ilimitado",
+        p_c2: "1 Activación de Hardware vinculada",
+        p_c3: "Separación de stems por IA ilimitada",
+        p_c4: "Fábrica masiva de playlists en Spotify",
+        p_c5: "Generador de licencias comerciales en PDF",
+        plan_com_clause: "*Reasignación gratuita de clave en caso de formateo o cambio de componentes mediante soporte técnico.",
+        btn_buy_now_txt: "Comprar Licencia Comercial — $29 USD"
+      },
+      en: {
+        nav_suite: "MODULES",
+        nav_console: "CONSOLE",
+        nav_pipeline: "WORKFLOW",
+        nav_license: "LICENSE",
+        nav_buy_btn: "Get License $29",
+        hero_status: "v1.1.2 NATIVE • X64 ARCHITECTURE",
+        hero_title: "Music engineering and automation for Suno & DAWs",
+        hero_sub: "Assisted lyrical generation with Gemini, mathematical -14 LUFS normalization, neural network stem extraction, and direct commercial sync PDF agreements.",
+        hero_cta_buy: "Buy Commercial License — $29 USD",
+        hero_cta_trial: "Download Free Trial (10 Tracks)",
+        hero_sub_specs: "Background local processing • Zero monthly subscriptions • Windows 10/11",
+        bento_badge: "SUITE ARCHITECTURE",
+        bento_title: "Modular Production Engine",
+        bento_sub: "Everything you need to process, legalize, and release music without leaving the ecosystem.",
+        b1_title: "Suno + Gemini Flash Orchestration",
+        b1_desc: "Specify genre or style. Gemini drafts complete lyrical compositions, tags, and metadata, dispatching generation directly to your local Suno session in parallel without copy-pasting.",
+        b2_title: "-14 LUFS Auto-Mastering",
+        b2_desc: "Automated loudness normalization to -14 LUFS integrated and -1.0 dBFS True Peak ceiling. Precision compliance for Spotify, YouTube, and Apple Music without clipping.",
+        b3_title: "AI Stem Separator: Acapella & Beat",
+        b3_desc: "Local neural network splits mixed audio into clean isolated vocal stems (acapella) and stereo instrumentals (beat). Optimized for live sets and remakes.",
+        b4_title: "Playlist Factory & PDF Licensor",
+        b4_desc: "Build 3-hour rotation sets blending your catalog with trending artists without duplicate tracks. Generates release assets (WAV, 3000px art, metadata CSV) and signed PDF sync licenses.",
+        pipe_title: "Local Production Pipeline",
+        price_h2: "Software Licensing",
+        price_sub: "Standalone native desktop software. Zero monthly recurring charges.",
+        plan_eval_title: "Evaluation Build",
+        plan_eval_name: "Free Trial",
+        plan_eval_desc: "Install on your Windows PC and evaluate audio processing fidelity without entering payment details.",
+        p_f1: "Up to 10 processed tracks",
+        p_f2: "Up to 10 complete downloads",
+        p_f3: "-14 LUFS DSP mastering active",
+        p_f4: "Official Windows installer (x64)",
+        btn_dl_trial_txt: "Download Installer (.exe)",
+        plan_com_title: "Commercial Edition",
+        plan_com_name: "Zokkora Suite License",
+        plan_com_period: "/ one-time fee",
+        plan_com_desc: "Unlimited commercial desktop use for life on a single physical machine.",
+        p_c1: "Unlimited generations & exports",
+        p_c2: "1 Hardware ID activation bound",
+        p_c3: "Unlimited local neural stem splitter",
+        p_c4: "Full Spotify playlist automation",
+        p_c5: "Signed PDF sync commercial licenses",
+        plan_com_clause: "*Free license transfer via technical support in case of hardware replacement or drive formatting.",
+        btn_buy_now_txt: "Buy Commercial License — $29 USD"
+      }
+    };
+
+    let currentLang = 'es';
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'es' ? 'en' : 'es';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          el.innerHTML = translations[currentLang][key];
+        }
+      });
+      document.getElementById('lang-toggle').innerText = currentLang === 'es' ? 'EN / ES' : 'ES / EN';
+    }
+  </script>
 </body>
 </html>
