@@ -1,489 +1,463 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- FAVICON OFICIAL ZOKKORA -->
+  <title>Zokkora Suite - Software de Producción y Distribución Musical IA</title>
+  <meta name="description" content="Software de escritorio profesional para producción musical asistida por IA y automatización para Windows 64-bit.">
   <link rel="icon" type="image/x-icon" href="icon.ico">
-  
-  <title>Zokkora Suite | Estudio de Música con IA para Suno, Mastering y Distribución</title>
-  <meta name="description" content="Automatiza la creación en Suno con Gemini, masteriza a -14 LUFS, separa voces e instrumentales con IA, emite certificados legales y fabrica playlists en Spotify.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              400: '#c084fc',
-              500: '#a855f7',
-              600: '#9333ea',
-              700: '#7e22ce',
-              900: '#1b0b2e',
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #07070b;
+      --card-bg: rgba(18, 17, 28, 0.7);
+      --card-border: rgba(168, 85, 247, 0.15);
+      --purple: #a855f7;
+      --purple-bright: #c084fc;
+      --purple-glow: rgba(168, 85, 247, 0.4);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-sub: #6b7280;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background-color: #08090d;
-      color: #e2e8f0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 10% 40%, rgba(126, 34, 206, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 70%, rgba(192, 132, 252, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    /* Navegación */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 7, 11, 0.75);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      box-shadow: 0 0 12px var(--purple-glow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--purple-bright);
+    }
+
+    /* Botones */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #a855f7, #7e22ce);
+      color: #fff;
+      box-shadow: 0 0 20px var(--purple-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+      background: linear-gradient(135deg, #c084fc, #9333ea);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--purple-bright);
+    }
+
+    /* Contenedor General */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 5rem 1rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: var(--purple-bright);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #ffffff 40%, var(--purple-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Features Grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin: 4rem 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    .card-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Sección de Precios */
+    .pricing {
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .pricing-card {
+      max-width: 500px;
+      margin: 2.5rem auto 0;
+      background: linear-gradient(180deg, rgba(28, 22, 45, 0.8), rgba(15, 13, 24, 0.9));
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      position: relative;
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.15);
+    }
+
+    .pricing-card .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #a855f7, #9333ea);
+      color: #fff;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px var(--purple-glow);
+    }
+
+    .price-value {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0.25rem;
+      margin: 1.5rem 0 0.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .price-value span {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .price-subtitle {
+      color: var(--purple-bright);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .pricing-features li svg {
+      color: var(--purple-bright);
+      flex-shrink: 0;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--purple-bright);
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+      .pricing-card {
+        padding: 2.5rem 1.5rem;
+      }
     }
   </style>
 </head>
-<body class="selection:bg-brand-600 selection:text-white">
+<body>
 
-  <!-- BARRA DE NAVEGACIÓN -->
-  <nav class="border-b border-slate-800/80 bg-[#08090d]/85 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      
-      <!-- LOGO OFICIAL ZOKKORA -->
-      <a href="#" class="flex items-center space-x-3 group">
-        <div class="h-10 w-10 rounded-xl overflow-hidden border border-purple-500/30 flex items-center justify-center bg-[#0f111a] shadow-lg shadow-purple-950/60 group-hover:border-purple-400/60 transition">
-          <img src="icon.ico" alt="Zokkora Icon" class="w-full h-full object-cover">
-        </div>
-        <span class="text-xl font-black tracking-wider text-white">ZOK<span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">KORA</span> <span class="text-[11px] font-mono font-medium text-slate-400 border border-slate-700/80 px-1.5 py-0.5 rounded bg-slate-900/60">SUITE</span></span>
+  <!-- Navegación -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <img src="icon.ico" alt="Zokkora Suite Logo">
+        <span>Zokkora Suite</span>
       </a>
-
-      <div class="flex items-center space-x-6">
-        <a href="#features" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_features">Módulos</a>
-        <a href="#workflow" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_workflow">Flujo</a>
-        <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_pricing">Licencia</a>
-        <a href="#faq" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_faq">FAQ</a>
-        
-        <button id="lang-toggle" onclick="toggleLanguage()" class="text-xs font-bold px-2.5 py-1 rounded border border-slate-700 bg-slate-800/70 hover:bg-slate-700 transition text-slate-200">
-          EN / ES
-        </button>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Características</a>
+        <a href="#pricing" class="nav-link">Licencia</a>
+        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">
+          Comprar $29 USD
+        </a>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <!-- HERO SECTION -->
-  <section class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-950/40 text-xs text-purple-300 mb-6">
-      <span class="h-1.5 w-1.5 rounded-full bg-pink-500 animate-pulse"></span>
-      <span data-i18n="hero_badge">Tu estudio de música con IA para Suno • v1.1.2 Oficial</span>
-    </div>
-    
-    <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mb-6" data-i18n="hero_title">
-      Crear • Descargar • Masterizar • Distribuir • Playlists
-    </h1>
-    
-    <p class="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed" data-i18n="hero_desc">
-      El ecosistema definitivo para productores y sellos independientes. Automatiza generaciones masivas en Suno vía Gemini, extrae pistas acapella y beats en WAV, emite licencias comerciales en PDF y programa playlists estratégicas en Spotify.
-    </p>
+  <!-- Hero Section -->
+  <main class="container">
+    <section class="hero">
+      <div class="badge">
+        <span>●</span> Versión Windows 64-bit Disponible
+      </div>
+      <h1>Potencia tu flujo musical con <span>Inteligencia Artificial</span></h1>
+      <p>
+        Optimiza tu catálogo, analiza métricas y administra tus lanzamientos con la suite de escritorio más rápida y potente diseñada para productores y artistas independientes.
+      </p>
+      <div class="hero-actions">
+        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          Comprar Licencia Comercial - $29 USD
+        </a>
+        <a href="#pricing" class="btn btn-outline">
+          Ver Detalles de la Licencia
+        </a>
+      </div>
+    </section>
 
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.2/Zokkora_1.1.2_x64-setup.exe" 
-         class="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold text-sm transition shadow-lg shadow-purple-900/40 text-center">
-        <span data-i18n="btn_trial">Descargar Instalador Gratuito</span>
-        <span class="block text-[11px] opacity-80" data-i18n="trial_sub">10 Creaciones / 10 Descargas sin costo</span>
-      </a>
-
-      <a href="#pricing" class="w-full sm:w-auto px-8 py-3.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 font-medium text-sm transition text-center" data-i18n="btn_buy_now">
-        Adquirir Licencia Comercial (1 PC)
-      </a>
-    </div>
-
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500">
-      <span data-i18n="spec_windows">✓ Windows 10 / 11 (x64)</span>
-      <span data-i18n="spec_local">✓ Ejecución 100% Local</span>
-      <span data-i18n="spec_updater">✓ Actualizaciones automáticas</span>
-    </div>
-  </section>
-
-  <!-- MÓDULOS DE LA APLICACIÓN -->
-  <section id="features" class="border-t border-slate-800/80 bg-[#0b0d14] py-20">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight" data-i18n="feat_title">Consola integral de producción musical</h2>
-        <p class="text-slate-400 text-sm mt-2" data-i18n="feat_subtitle">Todas las herramientas que necesitas agrupadas en una interfaz rápida e intuitiva.</p>
+    <!-- Características -->
+    <section id="features" class="features">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Rendimiento Nativo en Windows</h3>
+        <p>Software ligero y optimizado para ejecutarse en segundo plano sin ralentizar tus programas de producción (DAW) o herramientas de audio.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- 01 PRODUCCIÓN -->
-        <div class="p-6 rounded-xl border border-slate-800 bg-[#10121b] flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-mono text-purple-400 font-semibold mb-2">01 / PRODUCCIÓN CON IA</div>
-            <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat_1_title">Creación en Suno impulsada por Gemini</h3>
-            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_1_desc">
-              Selecciona tu formato (Single, EP de 2 a 4 temas, o Álbum completo) y tu estilo musical. Gemini compone letras completas, genera estructuras, estilos y metadatos, y Zokkora ejecuta la creación en Suno en paralelo sin que tengas que copiar ni pegar nada.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/60 text-xs text-slate-500" data-i18n="feat_1_sub">Cálculo de créditos Suno en tiempo real</div>
+      <div class="card">
+        <div class="card-icon">🔑</div>
+        <h3>Activación Única e Instantánea</h3>
+        <p>Al realizar tu compra, recibes de forma inmediata tu clave de licencia por correo electrónico vinculada al hardware de tu PC (1 activación).</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h3>Automatización & Streaming</h3>
+        <p>Herramientas integradas para cálculo de duraciones, gestión masiva de metadatos y distribución eficiente de pistas de audio.</p>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+      <h2>Licencia de Pago Único</h2>
+      <p style="color: var(--text-muted); margin-top: 0.5rem;">Sin mensualidades. Adquiere tu clave una sola vez y úsala para siempre.</p>
+
+      <div class="pricing-card">
+        <div class="popular-badge">Acceso de por vida</div>
+        <h3 style="font-size: 1.5rem; font-weight: 700;">Licencia Comercial</h3>
+        <div class="price-value">
+          $29.00 <span>USD</span>
         </div>
+        <div class="price-subtitle">Pago único · Duración ilimitada</div>
 
-        <!-- 02 BIBLIOTECA -->
-        <div class="p-6 rounded-xl border border-slate-800 bg-[#10121b] flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-mono text-purple-400 font-semibold mb-2">02 / BIBLIOTECA NATIVA</div>
-            <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat_2_title">Cola de Descargas y Organización</h3>
-            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_2_desc">
-              Descarga automática y silenciosa. Cada tema completado se almacena clasificado en la carpeta del artista con su archivo de audio, portada en alta definición y letra completa. Incluye buscador rápido con atajo de teclado <code>CTRL+K</code>.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/60 text-xs text-slate-500" data-i18n="feat_2_sub">Reproductor interno con switch original/master</div>
-        </div>
+        <ul class="pricing-features">
+          <li>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Licencia para 1 PC (Windows 64-bit)
+          </li>
+          <li>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Activación digital inmediata por correo electrónico
+          </li>
+          <li>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Uso comercial habilitado
+          </li>
+          <li>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Actualizaciones incluidas sin cobros periódicos
+          </li>
+          <li>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Pago seguro procesado por Lemon Squeezy
+          </li>
+        </ul>
 
-        <!-- 03 POST-PRODUCCIÓN -->
-        <div class="p-6 rounded-xl border border-slate-800 bg-[#10121b] flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-mono text-purple-400 font-semibold mb-2">03 / CALIDAD DE AUDIO</div>
-            <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat_3_title">Auto-Mastering a -14 LUFS</h3>
-            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_3_desc">
-              Normalización integrada para plataformas globales: <strong>Streaming estándar (-14 LUFS / -1.0 dBFS)</strong>, <strong>Club & Riddim (-9 LUFS)</strong> y <strong>Autopistas (-4.5 LUFS)</strong>. Deja tus canciones listas para competir en Spotify, Apple Music y YouTube.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/60 text-xs text-slate-500" data-i18n="feat_3_sub">Salida directa en WAV 16-bit 44.1kHz</div>
-        </div>
-
-        <!-- 04 STEMS -->
-        <div class="p-6 rounded-xl border border-slate-800 bg-[#10121b] flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-mono text-purple-400 font-semibold mb-2">04 / STEM SEPARATION</div>
-            <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat_4_title">Separador de Voz e Instrumental con IA</h3>
-            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_4_desc">
-              Divide cualquier pista en dos canales independientes de alta fidelidad: voz aislada (Acapella) y pista instrumental (Beat). Ideal para remezclas, actuaciones en vivo, versiones karaoke y producción avanzada.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/60 text-xs text-slate-500" data-i18n="feat_4_sub">Separación local y guardado en la carpeta del proyecto</div>
-        </div>
-
-        <!-- 05 LANZAMIENTOS -->
-        <div class="p-6 rounded-xl border border-slate-800 bg-[#10121b] flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-mono text-purple-400 font-semibold mb-2">05 / LANZAMIENTOS & LEGAL</div>
-            <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat_5_title">Paquete de Distribución y Certificados PDF</h3>
-            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_5_desc">
-              Prepara paquetes listos para DistroKid, ONErpm o TuneCore (WAV, cover 3000px, metadata.csv y txt). Genera biografías para Spotify, descripciones para YouTube con hashtags y emite certificados legales de licencia en PDF con código único de registro.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/60 text-xs text-slate-500" data-i18n="feat_5_sub">Contratos con validez para sincronización comercial</div>
-        </div>
-
-        <!-- 06 PLAYLISTS -->
-        <div class="p-6 rounded-xl border border-slate-800 bg-[#10121b] flex flex-col justify-between">
-          <div>
-            <div class="text-xs font-mono text-purple-400 font-semibold mb-2">06 / CRECIMIENTO & RETENCIÓN</div>
-            <h3 class="text-lg font-bold text-white mb-2" data-i18n="feat_6_title">Fábrica de Playlists para Spotify</h3>
-            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_6_desc">
-              Crea o actualiza listas en tu cuenta de Spotify en 4 sencillos pasos. Usa la <em>Fábrica de Playlists</em> para armar sesiones de 3 horas combinando tu catálogo con artistas parecidos del mercado sin repetir pistas y con filtros de exclusión.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/60 text-xs text-slate-500" data-i18n="feat_6_sub">Control de horas estimadas y porcentaje de catálogo propio</div>
-        </div>
-
+        <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+          Obtener Licencia Ahora
+        </a>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- PASO A PASO -->
-  <section id="workflow" class="py-20 max-w-6xl mx-auto px-6">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-extrabold text-white" data-i18n="wf_title">De la idea al máster en 4 pasos</h2>
-      <p class="text-slate-400 text-sm mt-2" data-i18n="wf_sub">Un flujo de trabajo optimizado para que no pierdas horas organizando archivos manualmente.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div class="p-5 rounded-lg border border-slate-800 bg-[#0f121a]">
-        <div class="text-pink-500 font-mono font-bold text-lg mb-2">PASO 1</div>
-        <h4 class="text-white font-semibold text-sm mb-1" data-i18n="wf_1_t">Generación Asistida</h4>
-        <p class="text-slate-400 text-xs leading-relaxed" data-i18n="wf_1_d">Gemini escribe el concepto, letras y tags. Zokkora lanza la creación múltiple en Suno.</p>
-      </div>
-
-      <div class="p-5 rounded-lg border border-slate-800 bg-[#0f121a]">
-        <div class="text-pink-500 font-mono font-bold text-lg mb-2">PASO 2</div>
-        <h4 class="text-white font-semibold text-sm mb-1" data-i18n="wf_2_t">Post-Producción Local</h4>
-        <p class="text-slate-400 text-xs leading-relaxed" data-i18n="wf_2_d">Normalización a -14 LUFS y extracción opcional de acapella/instrumental en WAV.</p>
-      </div>
-
-      <div class="p-5 rounded-lg border border-slate-800 bg-[#0f121a]">
-        <div class="text-pink-500 font-mono font-bold text-lg mb-2">PASO 3</div>
-        <h4 class="text-white font-semibold text-sm mb-1" data-i18n="wf_3_t">Empaquetado y Legal</h4>
-        <p class="text-slate-400 text-xs leading-relaxed" data-i18n="wf_3_d">Generación de carátulas 3000px, archivos CSV/TXT de distribución y certificados PDF.</p>
-      </div>
-
-      <div class="p-5 rounded-lg border border-slate-800 bg-[#0f121a]">
-        <div class="text-pink-500 font-mono font-bold text-lg mb-2">PASO 4</div>
-        <h4 class="text-white font-semibold text-sm mb-1" data-i18n="wf_4_t">Crecimiento en Spotify</h4>
-        <p class="text-slate-400 text-xs leading-relaxed" data-i18n="wf_4_d">Crea y rota canciones en playlists estratégicas para ganar visibilidad y oyentes.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓN DE PRECIOS -->
-  <section id="pricing" class="py-20 border-t border-slate-800/80 bg-[#0b0d14]">
-    <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight" data-i18n="price_title">Licenciamiento Directo y Transparente</h2>
-        <p class="text-slate-400 text-sm mt-2" data-i18n="price_subtitle">Comienza gratis y desbloquea el potencial total para tu estudio cuando lo necesites.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-        <!-- PLAN EVALUACIÓN -->
-        <div class="p-8 rounded-xl border border-slate-800 bg-[#10121b] flex flex-col justify-between">
-          <div>
-            <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2" data-i18n="plan_free_badge">Versión de Prueba</div>
-            <h3 class="text-xl font-bold text-white" data-i18n="plan_free_name">Prueba Gratuita</h3>
-            <div class="text-3xl font-extrabold text-white mt-4">$0</div>
-            <p class="text-xs text-slate-500 mt-1" data-i18n="plan_free_period">Descárgala y pruébala en tu PC de inmediato</p>
-            
-            <ul class="mt-6 space-y-3 text-sm text-slate-300">
-              <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_1">Hasta 10 canciones procesadas</span></li>
-              <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_2">Hasta 10 descargas completas</span></li>
-              <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_3">Auto-Mastering a -14 LUFS activo</span></li>
-              <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_4">Instalador oficial para Windows (x64)</span></li>
-            </ul>
-          </div>
-
-          <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.2/Zokkora_1.1.2_x64-setup.exe" 
-             class="mt-8 block text-center py-3 rounded-lg border border-slate-700 hover:bg-slate-800 text-white text-sm font-medium transition" data-i18n="btn_dl_trial">
-            Descargar Instalador (.exe)
-          </a>
-        </div>
-
-        <!-- PLAN PRO -->
-        <div class="p-8 rounded-xl border-2 border-purple-500/80 bg-[#141026] relative flex flex-col justify-between shadow-2xl shadow-purple-950/50">
-          <div class="absolute -top-3 right-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[10px] uppercase font-bold tracking-widest px-3 py-0.5 rounded-full" data-i18n="commercial_badge">
-            ACCESO COMPLETO
-          </div>
-
-          <div>
-            <div class="text-purple-300 text-xs font-semibold uppercase tracking-wider mb-2" data-i18n="plan_pro_badge">Producción Profesional</div>
-            <h3 class="text-xl font-bold text-white" data-i18n="plan_pro_name">Licencia Comercial Zokkora</h3>
-            <div class="text-3xl font-extrabold text-white mt-4">$29 <span class="text-xs font-normal text-slate-400" data-i18n="one_time_payment">/ pago único</span></div>
-            <p class="text-xs text-purple-200/70 mt-1" data-i18n="plan_pro_period">Sin pagos mensuales ni cobros recurrentes</p>
-
-            <ul class="mt-6 space-y-3 text-sm text-slate-200">
-              <li class="flex items-center gap-2 text-purple-300"><span>✓</span> <span data-i18n="pro_item_1">Generaciones y descargas ilimitadas</span></li>
-              <li class="flex items-center gap-2 text-purple-300"><span>✓</span> <strong data-i18n="pro_item_2">Válido para 1 PC (Hardware ID)</strong></li>
-              <li class="flex items-center gap-2 text-purple-300"><span>✓</span> <span data-i18n="pro_item_3">Separador de voz y beat con IA ilimitado</span></li>
-              <li class="flex items-center gap-2 text-purple-300"><span>✓</span> <span data-i18n="pro_item_4">Fábrica de Playlists masivas para Spotify</span></li>
-              <li class="flex items-center gap-2 text-purple-300"><span>✓</span> <span data-i18n="pro_item_5">Emisión de certificados legales en PDF</span></li>
-            </ul>
-
-            <div class="mt-6 p-3.5 rounded-lg bg-black/50 border border-purple-900/50 text-[11px] text-slate-300 leading-relaxed" data-i18n="license_clause">
-              <strong>Términos de activación:</strong> Cada clave adquirida se vincula al hardware (Hardware ID) de un único equipo Windows. No almacena contraseñas en servidores externos. Si formateas tu equipo o cambias de ordenador, nuestro soporte reasigna tu clave sin costo adicional.
-            </div>
-          </div>
-
-          <a href="#comprar" class="mt-8 block text-center py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-sm font-semibold transition shadow-lg shadow-purple-900/50" data-i18n="btn_buy_license">
-            Escríbeme para tu Licencia
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="py-20 max-w-4xl mx-auto px-6">
-    <h2 class="text-3xl font-extrabold text-white tracking-tight text-center mb-12" data-i18n="faq_title">Preguntas Frecuentes</h2>
-
-    <div class="space-y-6">
-      <div class="p-6 rounded-lg border border-slate-800 bg-[#0f121a]">
-        <h4 class="text-white font-medium text-base mb-2" data-i18n="faq_q1">¿Cómo interactúa Zokkora con mi cuenta de Suno?</h4>
-        <p class="text-slate-400 text-sm leading-relaxed" data-i18n="faq_a1">Zokkora automatiza las tareas repetitivas de composición y renderizado directamente desde tu propia sesión local. No necesitas compartir contraseñas ni transferir créditos; el software monitorea tu consumo de créditos en tiempo real.</p>
-      </div>
-
-      <div class="p-6 rounded-lg border border-slate-800 bg-[#0f121a]">
-        <h4 class="text-white font-medium text-base mb-2" data-i18n="faq_q2">¿Qué especificaciones tienen los archivos masterizados?</h4>
-        <p class="text-slate-400 text-sm leading-relaxed" data-i18n="faq_a2">El motor de auto-mastering procesa tus pistas a -14 LUFS integrados con un pico máximo de -1.0 dBFS en formato WAV (16-bit, 44.1 kHz), cumpliendo exactamente con las normas exigidas por los estándares de distribución comercial.</p>
-      </div>
-
-      <div class="p-6 rounded-lg border border-slate-800 bg-[#0f121a]">
-        <h4 class="text-white font-medium text-base mb-2" data-i18n="faq_q3">¿Cómo se actualiza el programa en el futuro?</h4>
-        <p class="text-slate-400 text-sm leading-relaxed" data-i18n="faq_a3">Zokkora incluye un actualizador integrado en la barra inferior. Cuando se lanza una nueva versión, el programa te notifica y se actualiza de forma automática con un solo clic sin borrar tus proyectos ni tu configuración.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-800/80 py-12 text-center text-xs text-slate-500 bg-[#06070a]">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center space-x-2">
-        <div class="h-6 w-6 rounded overflow-hidden border border-purple-500/30 flex items-center justify-center bg-[#0f111a]">
-          <img src="icon.ico" alt="Zokkora Icon" class="w-full h-full object-cover">
-        </div>
-        <span>© 2026 Zokkora. Tu estudio de música con IA para Suno.</span>
-      </div>
-      <div class="flex items-center gap-6">
-        <a href="#features" class="hover:text-slate-400 transition" data-i18n="nav_features">Módulos</a>
-        <a href="#pricing" class="hover:text-slate-400 transition" data-i18n="nav_pricing">Licencia</a>
-        <span class="text-slate-400 font-mono">zokkora.com</span>
+  <!-- Footer -->
+  <footer>
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+      <p>&copy; 2026 Zokkora. Todos los derechos reservados.</p>
+      <div style="display: flex; gap: 1.5rem;">
+        <a href="#">Términos de servicio</a>
+        <a href="#">Política de privacidad</a>
+        <a href="mailto:soporte@zokkora.com">Contacto y soporte</a>
       </div>
     </div>
   </footer>
 
-  <!-- SCRIPT BILINGÜE -->
-  <script>
-    const translations = {
-      es: {
-        nav_features: "Módulos",
-        nav_workflow: "Flujo",
-        nav_pricing: "Licencia",
-        nav_faq: "FAQ",
-        hero_badge: "Tu estudio de música con IA para Suno • v1.1.2 Oficial",
-        hero_title: "Crear • Descargar • Masterizar • Distribuir • Playlists",
-        hero_desc: "El ecosistema definitivo para productores y sellos independientes. Automatiza generaciones masivas en Suno vía Gemini, extrae pistas acapella y beats en WAV, emite licencias comerciales en PDF y programa playlists estratégicas en Spotify.",
-        btn_trial: "Descargar Instalador Gratuito",
-        trial_sub: "10 Creaciones / 10 Descargas sin costo",
-        btn_buy_now: "Adquirir Licencia Comercial (1 PC)",
-        spec_windows: "✓ Windows 10 / 11 (x64)",
-        spec_local: "✓ Ejecución 100% Local",
-        spec_updater: "✓ Actualizaciones automáticas",
-        feat_title: "Consola integral de producción musical",
-        feat_subtitle: "Todas las herramientas que necesitas agrupadas en una interfaz rápida e intuitiva.",
-        feat_1_title: "Creación en Suno impulsada por Gemini",
-        feat_1_desc: "Selecciona tu formato (Single, EP de 2 a 4 temas, o Álbum completo) y tu estilo musical. Gemini compone letras completas, genera estructuras, estilos y metadatos, y Zokkora ejecuta la creación en Suno en paralelo sin que tengas que copiar ni pegar nada.",
-        feat_1_sub: "Cálculo de créditos Suno en tiempo real",
-        feat_2_title: "Cola de Descargas y Organización",
-        feat_2_desc: "Descarga automática y silenciosa. Cada tema completado se almacena clasificado en la carpeta del artista con su archivo de audio, portada en alta definición y letra completa. Incluye buscador rápido con atajo de teclado CTRL+K.",
-        feat_2_sub: "Reproductor interno con switch original/master",
-        feat_3_title: "Auto-Mastering a -14 LUFS",
-        feat_3_desc: "Normalización integrada para plataformas globales: Streaming estándar (-14 LUFS / -1.0 dBFS), Club & Riddim (-9 LUFS) y Autopistas (-4.5 LUFS). Deja tus canciones listas para competir en Spotify, Apple Music y YouTube.",
-        feat_3_sub: "Salida directa en WAV 16-bit 44.1kHz",
-        feat_4_title: "Separador de Voz e Instrumental con IA",
-        feat_4_desc: "Divide cualquier pista en dos canales independientes de alta fidelidad: voz aislada (Acapella) y pista instrumental (Beat). Ideal para remezclas, actuaciones en vivo, versiones karaoke y producción avanzada.",
-        feat_4_sub: "Separación local y guardado en la carpeta del proyecto",
-        feat_5_title: "Paquete de Distribución y Certificados PDF",
-        feat_5_desc: "Prepara paquetes listos para DistroKid, ONErpm o TuneCore (WAV, cover 3000px, metadata.csv y txt). Genera biografías para Spotify, descripciones para YouTube con hashtags y emite certificados legales de licencia en PDF con código único de registro.",
-        feat_5_sub: "Contratos con validez para sincronización comercial",
-        feat_6_title: "Fábrica de Playlists para Spotify",
-        feat_6_desc: "Crea o actualiza listas en tu cuenta de Spotify en 4 sencillos pasos. Usa la Fábrica de Playlists para armar sesiones de 3 horas combinando tu catálogo con artistas parecidos del mercado sin repetir pistas y con filtros de exclusión.",
-        feat_6_sub: "Control de horas estimadas y porcentaje de catálogo propio",
-        wf_title: "De la idea al máster en 4 pasos",
-        wf_sub: "Un flujo de trabajo optimizado para que no pierdas horas organizando archivos manualmente.",
-        wf_1_t: "Generación Asistida",
-        wf_1_d: "Gemini escribe el concepto, letras y tags. Zokkora lanza la creación múltiple en Suno.",
-        wf_2_t: "Post-Producción Local",
-        wf_2_d: "Normalización a -14 LUFS y extracción opcional de acapella/instrumental en WAV.",
-        wf_3_t: "Empaquetado y Legal",
-        wf_3_d: "Generación de carátulas 3000px, archivos CSV/TXT de distribución y certificados PDF.",
-        wf_4_t: "Crecimiento en Spotify",
-        wf_4_d: "Crea y rota canciones en playlists estratégicas para ganar visibilidad y oyentes.",
-        price_title: "Licenciamiento Directo y Transparente",
-        price_subtitle: "Comienza gratis y desbloquea el potencial total para tu estudio cuando lo necesites.",
-        plan_free_badge: "Versión de Prueba",
-        plan_free_name: "Prueba Gratuita",
-        plan_free_period: "Descárgala y pruébala en tu PC de inmediato",
-        free_item_1: "Hasta 10 canciones procesadas",
-        free_item_2: "Hasta 10 descargas completas",
-        free_item_3: "Auto-Mastering a -14 LUFS activo",
-        free_item_4: "Instalador oficial para Windows (x64)",
-        btn_dl_trial: "Descargar Instalador (.exe)",
-        commercial_badge: "ACCESO COMPLETO",
-        plan_pro_badge: "Producción Profesional",
-        plan_pro_name: "Licencia Comercial Zokkora",
-        one_time_payment: "/ pago único",
-        plan_pro_period: "Sin pagos mensuales ni cobros recurrentes",
-        pro_item_1: "Generaciones y descargas ilimitadas",
-        pro_item_2: "Válido para 1 PC (Hardware ID)",
-        pro_item_3: "Separador de voz y beat con IA ilimitado",
-        pro_item_4: "Fábrica de Playlists masivas para Spotify",
-        pro_item_5: "Emisión de certificados legales en PDF",
-        license_clause: "<strong>Términos de activación:</strong> Cada clave adquirida se vincula al hardware (Hardware ID) de un único equipo Windows. No almacena contraseñas en servidores externos. Si formateas tu equipo o cambias de ordenador, nuestro soporte reasigna tu clave sin costo adicional.",
-        btn_buy_license: "Escríbeme para tu Licencia",
-        faq_title: "Preguntas Frecuentes",
-        faq_q1: "¿Cómo interactúa Zokkora con mi cuenta de Suno?",
-        faq_a1: "Zokkora automatiza las tareas repetitivas de composición y renderizado directamente desde tu propia sesión local. No necesitas compartir contraseñas ni transferir créditos; el software monitorea tu consumo de créditos en tiempo real.",
-        faq_q2: "¿Qué especificaciones tienen los archivos masterizados?",
-        faq_a2: "El motor de auto-mastering procesa tus pistas a -14 LUFS integrados con un pico máximo de -1.0 dBFS en formato WAV (16-bit, 44.1 kHz), cumpliendo exactamente con las normas exigidas por los estándares de distribución comercial.",
-        faq_q3: "¿Cómo se actualiza el programa en el futuro?",
-        faq_a3: "Zokkora incluye un actualizador integrado en la barra inferior. Cuando se lanza una nueva versión, el programa te notifica y se actualiza de forma automática con un solo clic sin borrar tus proyectos ni tu configuración."
-      },
-      en: {
-        nav_features: "Modules",
-        nav_workflow: "Workflow",
-        nav_pricing: "License",
-        nav_faq: "FAQ",
-        hero_badge: "Your AI music studio for Suno • v1.1.2 Official",
-        hero_title: "Create • Download • Master • Distribute • Playlists",
-        hero_desc: "The definitive suite for indie producers and music labels. Automate bulk Suno generations with Gemini, extract stems into lossless WAVs, issue legal PDF licenses, and schedule smart Spotify playlists.",
-        btn_trial: "Download Free Installer",
-        trial_sub: "10 Creations / 10 Downloads included",
-        btn_buy_now: "Get Commercial License (1 PC)",
-        spec_windows: "✓ Windows 10 / 11 (x64)",
-        spec_local: "✓ 100% Local Execution",
-        spec_updater: "✓ Automatic silent updates",
-        feat_title: "All-in-one music production console",
-        feat_subtitle: "Every utility you need packed into a fast, native interface.",
-        feat_1_title: "Suno Creation Powered by Gemini",
-        feat_1_desc: "Select format (Single, 2-4 track EP, or Full Album) and genre. Gemini writes original lyrics, styles, and metadata, while Zokkora executes parallel generation inside Suno without copy-pasting.",
-        feat_1_sub: "Real-time Suno credit balance tracking",
-        feat_2_title: "Download Queue & Smart Library",
-        feat_2_desc: "Silent background downloads. Each finished song is automatically stored in its artist folder with hi-res artwork and complete lyrics. Includes global quick search with CTRL+K.",
-        feat_2_sub: "Built-in player with original/master A-B switch",
-        feat_3_title: "-14 LUFS Auto-Mastering",
-        feat_3_desc: "Loudness normalization for global DSPs: Standard Streaming (-14 LUFS / -1.0 dBFS), Club & Riddim (-9 LUFS), and Highway (-4.5 LUFS). Deliver tracks tuned for Spotify, Apple Music, and YouTube.",
-        feat_3_sub: "Direct export to 16-bit 44.1kHz WAV",
-        feat_4_title: "AI Stem Separator (Vocals & Beats)",
-        feat_4_desc: "Split any audio file into two high-fidelity stems: isolated vocal (Acapella) and backing track (Beat). Perfect for remixing, live performances, and karaoke versions.",
-        feat_4_sub: "Local processing saved directly to project directory",
-        feat_5_title: "Distribution Packages & Legal PDF Certificates",
-        feat_5_desc: "Generates release packages ready for DistroKid, ONErpm, or TuneCore (WAV, 3000px art, metadata CSV/TXT). Writes Spotify bios, YouTube descriptions with hashtags, and issues signed PDF sync licenses.",
-        feat_5_sub: "Legally compliant sync and commercial contracts",
-        feat_6_title: "Spotify Playlist Factory & Roster",
-        feat_6_desc: "Build and update playlists on your Spotify profile in 4 steps. Use the Playlist Factory to compile 3-hour mixes blending your tracks with comparable trending artists with zero duplicate songs.",
-        feat_6_sub: "Dynamic duration estimation and catalog ratio control",
-        wf_title: "From idea to master in 4 steps",
-        wf_sub: "A refined workflow so you never waste hours arranging directories by hand.",
-        wf_1_t: "Assisted Generation",
-        wf_1_d: "Gemini crafts concepts, lyrics, and tags. Zokkora launches parallel tasks in Suno.",
-        wf_2_t: "Local Post-Production",
-        wf_2_d: "-14 LUFS normalization and optional AI extraction of vocal and instrumental stems.",
-        wf_3_t: "Packaging & Legal",
-        wf_3_d: "Exports 3000px covers, metadata CSV/TXT sheets, and printable PDF certificates.",
-        wf_4_t: "Spotify Growth",
-        wf_4_d: "Rotate tracks into curated algorithmic playlists to build real listeners.",
-        price_title: "Direct & Transparent Licensing",
-        price_subtitle: "Start for free and unlock the full studio capabilities whenever you are ready.",
-        plan_free_badge: "Evaluation Version",
-        plan_free_name: "Free Trial",
-        plan_free_period: "Download and evaluate on your PC right away",
-        free_item_1: "Up to 10 processed songs",
-        free_item_2: "Up to 10 complete downloads",
-        free_item_3: "-14 LUFS Auto-Mastering active",
-        free_item_4: "Official Windows installer (x64)",
-        btn_dl_trial: "Download Installer (.exe)",
-        commercial_badge: "FULL ACCESS",
-        plan_pro_badge: "Professional Production",
-        plan_pro_name: "Zokkora Commercial License",
-        one_time_payment: "/ one-time fee",
-        plan_pro_period: "Zero recurring fees or subscriptions",
-        pro_item_1: "Unlimited creations and downloads",
-        pro_item_2: "Valid for 1 PC (Hardware ID locked)",
-        pro_item_3: "Unlimited AI vocal & beat stem separation",
-        pro_item_4: "Full Spotify Playlist Factory suite",
-        pro_item_5: "Printable PDF commercial licenses",
-        license_clause: "<strong>License Terms:</strong> Each key binds to a single physical Windows PC via Hardware ID. No passwords stored on external servers. If you format or upgrade your PC, support reassigns your license at no extra cost.",
-        btn_buy_license: "Contact for License Key",
-        faq_title: "Frequently Asked Questions",
-        faq_q1: "How does Zokkora interact with my Suno account?",
-        faq_a1: "Zokkora automates the repetitive creation tasks directly inside your local browser session. You never share credentials or transfer credits; the app monitors your credit balance live.",
-        faq_q2: "What are the mastering specifications?",
-        faq_a2: "The auto-mastering engine processes tracks to -14 LUFS integrated with a true peak ceiling of -1.0 dBFS in lossless WAV (16-bit, 44.1 kHz), meeting standard digital distributor requirements.",
-        faq_q3: "How software updates work?",
-        faq_a3: "Zokkora features a silent updater in the bottom dock. When a new version is released, you get notified and update with a single click without losing projects or configurations."
-      }
-    };
-
-    let currentLang = 'es';
-
-    function toggleLanguage() {
-      currentLang = currentLang === 'es' ? 'en' : 'es';
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[currentLang][key]) {
-          el.innerHTML = translations[currentLang][key];
-        }
-      });
-      document.getElementById('lang-toggle').innerText = currentLang === 'es' ? 'EN / ES' : 'ES / EN';
-    }
-  </script>
 </body>
 </html>
