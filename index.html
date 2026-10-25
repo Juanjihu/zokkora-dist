@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zokkora Suite | Automatización y Masterización de Audio para Productores</title>
+  <meta name="description" content="Automatiza la generación por lotes, masteriza a -14 LUFS y gestiona metadatos y certificados legales para tu catálogo musical.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              900: '#1e1035',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0b0d13;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="selection:bg-brand-600 selection:text-white">
+
+  <!-- BARRA DE NAVEGACIÓN -->
+  <nav class="border-b border-slate-800 bg-[#0b0d13]/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="text-xl font-bold tracking-tight text-white">ZOKKORA <span class="text-brand-500 font-mono text-sm">SUITE</span></span>
+      </div>
+      <div class="flex items-center space-x-6">
+        <a href="#features" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_features">Características</a>
+        <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_pricing">Precios</a>
+        <a href="#faq" class="text-sm text-slate-400 hover:text-white transition" data-i18n="nav_faq">FAQ</a>
+        
+        <!-- SELECTOR DE IDIOMA -->
+        <button id="lang-toggle" onclick="toggleLanguage()" class="text-xs font-semibold px-2.5 py-1 rounded border border-slate-700 bg-slate-800/60 hover:bg-slate-700 transition text-slate-200">
+          EN / ES
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-800 bg-slate-900/60 text-xs text-brand-500 mb-6">
+      <span class="h-1.5 w-1.5 rounded-full bg-brand-500 animate-pulse"></span>
+      <span data-i18n="hero_badge">Versión 1.1.2 Oficial para Windows (x64)</span>
+    </div>
+    
+    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6" data-i18n="hero_title">
+      Escala tu producción musical con automatización local
+    </h1>
+    
+    <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10" data-i18n="hero_desc">
+      Generación por lotes, normalización precisa a -14 LUFS, Artist Identity Kit y certificados legales en PDF. Sin cuentas ni suscripciones obligatorias.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <!-- BOTÓN DE DESCARGA DIRECTA DE GITHUB -->
+      <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.2/Zokkora_1.1.2_x64-setup.exe" 
+         class="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium text-sm transition shadow-lg shadow-brand-600/20 text-center">
+        <span data-i18n="btn_trial">Descargar Prueba Gratuita</span>
+        <span class="block text-[11px] opacity-80" data-i18n="trial_sub">10 Canciones / 10 Descargas incluidas</span>
+      </a>
+
+      <a href="#pricing" class="w-full sm:w-auto px-8 py-3.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 font-medium text-sm transition text-center" data-i18n="btn_buy_now">
+        Adquirir Licencia Comercial
+      </a>
+    </div>
+
+    <div class="mt-8 flex items-center justify-center gap-6 text-xs text-slate-500">
+      <span data-i18n="spec_windows">✓ Windows 10 / 11 (64-bit)</span>
+      <span data-i18n="spec_local">✓ Procesamiento 100% Local</span>
+      <span data-i18n="spec_no_account">✓ Sin registro web</span>
+    </div>
+  </section>
+
+  <!-- CARACTERÍSTICAS -->
+  <section id="features" class="border-t border-slate-800/80 bg-slate-900/20 py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight" data-i18n="feat_title">Diseñado para alto volumen</h2>
+        <p class="text-slate-400 text-sm mt-2" data-i18n="feat_subtitle">Herramientas nativas construidas para estabilidad y rapidez.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
+          <div class="text-brand-500 text-sm font-semibold mb-2">01</div>
+          <h3 class="text-white font-semibold mb-2" data-i18n="feat_1_title">Lotes y Descarga Masiva</h3>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_1_desc">Automatiza la extracción y organización de tus creaciones sin perder tiempo en clics repetitivos.</p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
+          <div class="text-brand-500 text-sm font-semibold mb-2">02</div>
+          <h3 class="text-white font-semibold mb-2" data-i18n="feat_2_title">Masterizado a -14 LUFS</h3>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_2_desc">Ajuste de sonoridad integrado para cumplir con los estándares técnicos de Spotify, Apple Music y YouTube.</p>
+        </div>
+
+        <div class="p-6 rounded-xl border border-slate-800 bg-[#0f121a]">
+          <div class="text-brand-500 text-sm font-semibold mb-2">03</div>
+          <h3 class="text-white font-semibold mb-2" data-i18n="feat_3_title">Artist Kit y Certificados PDF</h3>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="feat_3_desc">Generación instantánea de certificados de propiedad intelectual y plantillas de metadatos en español e inglés.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRECIOS Y TÉRMINOS DE LICENCIA -->
+  <section id="pricing" class="py-20 max-w-4xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight" data-i18n="price_title">Licenciamiento Transparente</h2>
+      <p class="text-slate-400 text-sm mt-2" data-i18n="price_subtitle">Pago único para producción profesional sin límites.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+      <!-- PLAN GRATUITO -->
+      <div class="p-8 rounded-xl border border-slate-800 bg-[#0f121a] flex flex-col justify-between">
+        <div>
+          <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-2" data-i18n="plan_free_badge">Evaluación</div>
+          <h3 class="text-xl font-bold text-white" data-i18n="plan_free_name">Prueba Gratuita</h3>
+          <div class="text-3xl font-extrabold text-white mt-4">$0</div>
+          <p class="text-xs text-slate-500 mt-1" data-i18n="plan_free_period">Sin límite de tiempo para probar</p>
+          
+          <ul class="mt-6 space-y-3 text-sm text-slate-300">
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_1">Hasta 10 canciones procesadas</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_2">Hasta 10 descargas completas</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_3">Acceso a todas las herramientas</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="free_item_4">Instalador oficial para Windows</span></li>
+          </ul>
+        </div>
+
+        <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.2/Zokkora_1.1.2_x64-setup.exe" 
+           class="mt-8 block text-center py-2.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-white text-sm font-medium transition" data-i18n="btn_dl_trial">
+          Descargar Instalador (.exe)
+        </a>
+      </div>
+
+      <!-- PLAN COMERCIAL -->
+      <div class="p-8 rounded-xl border-2 border-brand-500/80 bg-[#121124] relative flex flex-col justify-between">
+        <div class="absolute -top-3 right-6 bg-brand-600 text-white text-[10px] uppercase font-bold tracking-widest px-3 py-0.5 rounded-full" data-i18n="commercial_badge">
+          RECOMENDADO
+        </div>
+
+        <div>
+          <div class="text-brand-400 text-xs font-semibold uppercase tracking-wider mb-2" data-i18n="plan_pro_badge">Uso Ilimitado</div>
+          <h3 class="text-xl font-bold text-white" data-i18n="plan_pro_name">Licencia Comercial</h3>
+          <div class="text-3xl font-extrabold text-white mt-4">$29 <span class="text-xs font-normal text-slate-400" data-i18n="one_time_payment">/ pago único</span></div>
+          <p class="text-xs text-slate-400 mt-1" data-i18n="plan_pro_period">Sin cuotas mensuales recurrentes</p>
+
+          <ul class="mt-6 space-y-3 text-sm text-slate-200">
+            <li class="flex items-center gap-2 text-brand-300"><span>✓</span> <span data-i18n="pro_item_1">Generación y descargas ilimitadas</span></li>
+            <li class="flex items-center gap-2 text-brand-300"><span>✓</span> <strong data-i18n="pro_item_2">Válido para 1 PC (Hardware ID)</strong></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="pro_item_3">Sin login ni dependencia de servidores</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="pro_item_4">Masterización -14 LUFS integrada</span></li>
+            <li class="flex items-center gap-2"><span>✓</span> <span data-i18n="pro_item_5">Certificados PDF en español e inglés</span></li>
+          </ul>
+
+          <!-- NOTA OBLIGATORIA DE HARDWARE ID -->
+          <div class="mt-6 p-3 rounded-lg bg-black/40 border border-slate-800 text-[11px] text-slate-400 leading-relaxed" data-i18n="license_clause">
+            <strong>Condición de licencia:</strong> Cada clave comercial activa el software en un único equipo Windows físico. No requiere cuentas web. Si formateas o cambias de PC, soporte técnico reasigna tu clave.
+          </div>
+        </div>
+
+        <!-- REEMPLAZAR ESTE ENLACE CON TU CHECKOUT DE LEMON SQUEEZY O PADDLE -->
+        <a href="#comprar" class="mt-8 block text-center py-2.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold transition shadow-md shadow-brand-600/30" data-i18n="btn_buy_license">
+          Comprar Clave de Licencia
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <section id="faq" class="border-t border-slate-800/80 bg-slate-900/10 py-20">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight text-center mb-12" data-i18n="faq_title">Preguntas Frecuentes</h2>
+
+      <div class="space-y-6">
+        <div class="p-6 rounded-lg border border-slate-800 bg-[#0f121a]">
+          <h4 class="text-white font-medium text-base mb-2" data-i18n="faq_q1">¿Cómo se activa mi licencia tras la compra?</h4>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="faq_a1">Al completar el pago, la pasarela te enviará de forma inmediata una clave de activación por correo electrónico. Solo abres Zokkora Suite en tu PC, pegas la clave en la ventana de activación y el software quedará desbloqueado de forma permanente.</p>
+        </div>
+
+        <div class="p-6 rounded-lg border border-slate-800 bg-[#0f121a]">
+          <h4 class="text-white font-medium text-base mb-2" data-i18n="faq_q2">¿Por qué la licencia está limitada a 1 equipo?</h4>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="faq_a2">Zokkora Suite prioriza la privacidad y no almacena credenciales ni datos tuyos en la nube. La licencia se enlaza al identificador de hardware (Hardware ID) de tu computadora física para operar de forma 100% local y autónoma.</p>
+        </div>
+
+        <div class="p-6 rounded-lg border border-slate-800 bg-[#0f121a]">
+          <h4 class="text-white font-medium text-base mb-2" data-i18n="faq_q3">¿Qué sucede si cambio de computadora o formateo el disco?</h4>
+          <p class="text-slate-400 text-sm leading-relaxed" data-i18n="faq_a3">No pierdes tu inversión. Puedes contactar a soporte indicando el correo de compra y tu clave será restablecida para que la enlaces a tu nuevo equipo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 py-10 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>© 2026 Zokkora. Todos los derechos reservados.</div>
+      <div class="flex gap-4">
+        <span>zokkora.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT DE TRADUCCIÓN BILINGÜE ES / EN -->
+  <script>
+    const translations = {
+      es: {
+        nav_features: "Características",
+        nav_pricing: "Precios",
+        nav_faq: "FAQ",
+        hero_badge: "Versión 1.1.2 Oficial para Windows (x64)",
+        hero_title: "Escala tu producción musical con automatización local",
+        hero_desc: "Generación por lotes, normalización precisa a -14 LUFS, Artist Identity Kit y certificados legales en PDF. Sin cuentas ni suscripciones obligatorias.",
+        btn_trial: "Descargar Prueba Gratuita",
+        trial_sub: "10 Canciones / 10 Descargas incluidas",
+        btn_buy_now: "Adquirir Licencia Comercial",
+        spec_windows: "✓ Windows 10 / 11 (64-bit)",
+        spec_local: "✓ Procesamiento 100% Local",
+        spec_no_account: "✓ Sin registro web",
+        feat_title: "Diseñado para alto volumen",
+        feat_subtitle: "Herramientas nativas construidas para estabilidad y rapidez.",
+        feat_1_title: "Lotes y Descarga Masiva",
+        feat_1_desc: "Automatiza la extracción y organización de tus creaciones sin perder tiempo en clics repetitivos.",
+        feat_2_title: "Masterizado a -14 LUFS",
+        feat_2_desc: "Ajuste de sonoridad integrado para cumplir con los estándares técnicos de Spotify, Apple Music y YouTube.",
+        feat_3_title: "Artist Kit y Certificados PDF",
+        feat_3_desc: "Generación instantánea de certificados de propiedad intelectual y plantillas de metadatos en español e inglés.",
+        price_title: "Licenciamiento Transparente",
+        price_subtitle: "Pago único para producción profesional sin límites.",
+        plan_free_badge: "Evaluación",
+        plan_free_name: "Prueba Gratuita",
+        plan_free_period: "Sin límite de tiempo para probar",
+        free_item_1: "Hasta 10 canciones procesadas",
+        free_item_2: "Hasta 10 descargas completas",
+        free_item_3: "Acceso a todas las herramientas",
+        free_item_4: "Instalador oficial para Windows",
+        btn_dl_trial: "Descargar Instalador (.exe)",
+        commercial_badge: "RECOMENDADO",
+        plan_pro_badge: "Uso Ilimitado",
+        plan_pro_name: "Licencia Comercial",
+        one_time_payment: "/ pago único",
+        plan_pro_period: "Sin cuotas mensuales recurrentes",
+        pro_item_1: "Generación y descargas ilimitadas",
+        pro_item_2: "Válido para 1 PC (Hardware ID)",
+        pro_item_3: "Sin login ni dependencia de servidores",
+        pro_item_4: "Masterización -14 LUFS integrada",
+        pro_item_5: "Certificados PDF en español e inglés",
+        license_clause: "<strong>Condición de licencia:</strong> Cada clave comercial activa el software en un único equipo Windows físico. No requiere cuentas web. Si formateas o cambias de PC, soporte técnico reasigna tu clave.",
+        btn_buy_license: "Comprar Clave de Licencia",
+        faq_title: "Preguntas Frecuentes",
+        faq_q1: "¿Cómo se activa mi licencia tras la compra?",
+        faq_a1: "Al completar el pago, la pasarela te enviará de forma inmediata una clave de activación por correo electrónico. Solo abres Zokkora Suite en tu PC, pegas la clave en la ventana de activación y el software quedará desbloqueado de forma permanente.",
+        faq_q2: "¿Por qué la licencia está limitada a 1 equipo?",
+        faq_a2: "Zokkora Suite prioriza la privacidad y no almacena credenciales ni datos tuyos en la nube. La licencia se enlaza al identificador de hardware (Hardware ID) de tu computadora física para operar de forma 100% local y autónoma.",
+        faq_q3: "¿Qué sucede si cambio de computadora o formateo el disco?",
+        faq_a3: "No pierdes tu inversión. Puedes contactar a soporte indicando el correo de compra y tu clave será restablecida para que la enlaces a tu nuevo equipo."
+      },
+      en: {
+        nav_features: "Features",
+        nav_pricing: "Pricing",
+        nav_faq: "FAQ",
+        hero_badge: "Version 1.1.2 Official for Windows (x64)",
+        hero_title: "Scale your music production with local automation",
+        hero_desc: "Batch generation, accurate -14 LUFS normalization, Artist Identity Kit, and legal PDF certificates. No accounts or mandatory subscriptions required.",
+        btn_trial: "Download Free Trial",
+        trial_sub: "10 Songs / 10 Downloads included",
+        btn_buy_now: "Get Commercial License",
+        spec_windows: "✓ Windows 10 / 11 (64-bit)",
+        spec_local: "✓ 100% Local Processing",
+        spec_no_account: "✓ No web account needed",
+        feat_title: "Built for high output",
+        feat_subtitle: "Native tools engineered for rock-solid stability and speed.",
+        feat_1_title: "Batch & Mass Download",
+        feat_1_desc: "Automate extraction and file management without wasting hours on repetitive clicking.",
+        feat_2_title: "-14 LUFS Mastering",
+        feat_2_desc: "Integrated loudness normalization compliant with Spotify, Apple Music, and YouTube audio standards.",
+        feat_3_title: "Artist Kit & Legal PDF Certificates",
+        feat_3_desc: "Instant generation of intellectual property certificates and bilingual metadata sheets (EN/ES).",
+        price_title: "Transparent Licensing",
+        price_subtitle: "One-time payment for unlimited professional workflow.",
+        plan_free_badge: "Evaluation",
+        plan_free_name: "Free Trial",
+        plan_free_period: "No expiration date to evaluate",
+        free_item_1: "Up to 10 processed songs",
+        free_item_2: "Up to 10 full downloads",
+        free_item_3: "Access to all primary tools",
+        free_item_4: "Official Windows installer",
+        btn_dl_trial: "Download Installer (.exe)",
+        commercial_badge: "RECOMMENDED",
+        plan_pro_badge: "Unlimited Access",
+        plan_pro_name: "Commercial License",
+        one_time_payment: "/ one-time fee",
+        plan_pro_period: "No recurring monthly fees",
+        pro_item_1: "Unlimited generation and downloads",
+        pro_item_2: "Valid for 1 PC (Hardware ID locked)",
+        pro_item_3: "Zero login and no cloud server reliance",
+        pro_item_4: "Integrated -14 LUFS mastering",
+        pro_item_5: "PDF certificates in English and Spanish",
+        license_clause: "<strong>License Terms:</strong> Each commercial key unlocks the software on a single physical Windows PC. No online account required. If you reformat or replace your machine, support reassigns your key.",
+        btn_buy_license: "Purchase License Key",
+        faq_title: "Frequently Asked Questions",
+        faq_q1: "How do I activate my license after purchase?",
+        faq_a1: "Upon payment completion, the gateway immediately emails your license key. Launch Zokkora Suite on your PC, paste your key into the activation modal, and the software is unlocked permanently.",
+        faq_q2: "Why is the license locked to 1 PC?",
+        faq_a2: "Zokkora Suite prioritizes privacy and stores no credentials in the cloud. The key locks locally to your computer's Hardware ID, running completely autonomous and offline.",
+        faq_q3: "What happens if I change computers or format my drive?",
+        faq_a3: "You do not lose your purchase. Contact support with your order email and your key will be reset to bind to your new machine."
+      }
+    };
+
+    let currentLang = 'es';
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'es' ? 'en' : 'es';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          el.innerHTML = translations[currentLang][key];
+        }
+      });
+      document.getElementById('lang-toggle').innerText = currentLang === 'es' ? 'EN / ES' : 'ES / EN';
+    }
+  </script>
+</body>
+</html>
