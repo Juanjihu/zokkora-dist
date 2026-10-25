@@ -219,7 +219,7 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- VIDEO DEMOSTRACIÓN -->
+<!-- VIDEO DEMOSTRACIÓN (NATIVO HTML5) -->
 <section id="demo" class="max-w-5xl mx-auto px-4 sm:px-6 py-10 lg:py-16">
   <div class="text-center max-w-2xl mx-auto mb-8">
     <span class="tag inline-flex items-center gap-2">
@@ -235,15 +235,15 @@ tailwind.config = {
   </div>
 
   <div class="win overflow-hidden p-2 sm:p-3 bg-black/40 hairline rounded-2xl shadow-2xl">
-    <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-obsidian">
-      <iframe 
-        class="absolute inset-0 w-full h-full"
-        src="https://www.youtube-nocookie.com/embed/K7nfcqjAQNc?rel=0&modestbranding=1" 
-        title="Zokkora Suite en acción" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-        allowfullscreen>
-      </iframe>
+    <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-obsidian flex items-center justify-center">
+      <video 
+        controls 
+        playsinline 
+        preload="metadata"
+        class="w-full h-full object-cover rounded-xl">
+        <source src="demo-video.mp4" type="video/mp4">
+        Tu navegador no soporta el reproductor de video.
+      </video>
     </div>
   </div>
 </section>
