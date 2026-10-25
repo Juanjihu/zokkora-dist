@@ -91,7 +91,7 @@ tailwind.config = {
         <button type="button" data-lang="es" aria-checked="true" class="px-2.5 py-1 rounded-md text-dim">ES</button>
         <button type="button" data-lang="en" aria-checked="false" class="px-2.5 py-1 rounded-md text-dim">EN</button>
       </div>
-      <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.3/Zokkora_1.1.3_x64-setup.exe" download rel="noopener noreferrer" class="btn-ghost text-ink text-sm font-medium px-3.5 py-2 rounded-lg whitespace-nowrap hidden lg:inline-flex items-center gap-1.5" data-i18n="nav.try">Probar gratis (10 temas)</a>
+      <a href="https://github.com/Juanjihu/zokkora-dist/releases/latest/download/Zokkora_x64-setup.exe" download rel="noopener noreferrer" class="btn-ghost text-ink text-sm font-medium px-3.5 py-2 rounded-lg whitespace-nowrap hidden lg:inline-flex items-center gap-1.5" data-i18n="nav.try">Probar gratis (10 temas)</a>
       <a href="#precio" class="btn-primary text-white text-sm font-semibold px-4 py-2 rounded-lg" data-i18n="nav.cta">Comprar licencia</a>
     </div>
   </div>
@@ -114,7 +114,7 @@ tailwind.config = {
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href="#precio" class="btn-primary text-white font-semibold px-5 py-3 rounded-xl" data-i18n="hero.cta1">Comprar licencia</a>
-        <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.3/Zokkora_1.1.3_x64-setup.exe" download rel="noopener noreferrer" class="btn-ghost text-ink font-medium px-5 py-3 rounded-xl inline-flex items-center gap-2">
+        <a href="https://github.com/Juanjihu/zokkora-dist/releases/latest/download/Zokkora_x64-setup.exe" download rel="noopener noreferrer" class="btn-ghost text-ink font-medium px-5 py-3 rounded-xl inline-flex items-center gap-2">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 20h15"/></svg>
           <span data-i18n="hero.cta2">Descargar para Windows</span>
         </a>
@@ -123,7 +123,7 @@ tailwind.config = {
         <span data-i18n="hero.t1">Pago único</span><span class="text-titanium">·</span>
         <span data-i18n="hero.t2">Licencia por Hardware ID</span><span class="text-titanium">·</span>
         <span data-i18n="hero.t3">Tus archivos en tu PC</span><span class="text-titanium">·</span>
-        <span>Windows x64 · v1.1.3</span>
+        <span data-ver="Windows x64 · v{v}">Windows x64 · v1.1.3</span>
       </div>
     </div>
 
@@ -344,7 +344,7 @@ tailwind.config = {
 
     <a href="https://zokkora.lemonsqueezy.com/checkout/buy/ff0d241f-135d-4a25-8a73-d48b740834d4" class="btn-primary text-white font-semibold w-full mt-6 py-3.5 rounded-xl grid place-items-center" data-i18n="price.cta">Comprar ahora</a>
     <p class="mt-3 text-center text-[12px] text-faint leading-relaxed" data-i18n="price.spam">Tu clave se despacha al instante a tu correo tras el pago. ¿No la ves en 2 minutos? Revisa spam o promociones.</p>
-    <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.3/Zokkora_1.1.3_x64-setup.exe" download rel="noopener noreferrer" class="block text-center mt-3 text-sm text-dim hover:text-ink transition" data-i18n="price.try">Descargar y probar primero</a>
+    <a href="https://github.com/Juanjihu/zokkora-dist/releases/latest/download/Zokkora_x64-setup.exe" download rel="noopener noreferrer" class="block text-center mt-3 text-sm text-dim hover:text-ink transition" data-i18n="price.try">Descargar y probar primero</a>
     <p class="mt-4 text-center text-[12px] text-faint"><span data-i18n="price.support">¿Dudas antes de comprar?</span> <a href="mailto:soporte@zokkora.com" class="text-dim hover:text-ink underline underline-offset-2">soporte@zokkora.com</a></p>
   </div>
 </section>
@@ -356,10 +356,10 @@ tailwind.config = {
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row gap-6 sm:items-center justify-between">
     <div class="flex items-center gap-2.5">
       <img src="icon.ico" width="22" height="22" alt="" class="rounded-md">
-      <span class="text-sm text-dim">Zokkora Suite <span class="mono text-faint">v1.1.3 · Windows x64</span></span>
+      <span class="text-sm text-dim">Zokkora Suite <span class="mono text-faint" data-ver="v{v} · Windows x64">v1.1.3 · Windows x64</span></span>
     </div>
     <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-dim">
-      <a href="https://github.com/Juanjihu/zokkora-dist/releases/download/v1.1.3/Zokkora_1.1.3_x64-setup.exe" download rel="noopener noreferrer" class="hover:text-ink transition" data-i18n="foot.dl">Descargar</a>
+      <a href="https://github.com/Juanjihu/zokkora-dist/releases/latest/download/Zokkora_x64-setup.exe" download rel="noopener noreferrer" class="hover:text-ink transition" data-i18n="foot.dl">Descargar</a>
       <a href="#precio" class="hover:text-ink transition" data-i18n="foot.buy">Comprar</a>
       <a href="mailto:soporte@zokkora.com" class="hover:text-ink transition">soporte@zokkora.com</a>
       <span class="text-faint mono text-xs" data-i18n="foot.rights">Hecho para creadores.</span>
@@ -535,6 +535,30 @@ function applyLang(l){
   const nav = (navigator.language || 'es').toLowerCase();
   applyLang(saved || (nav.indexOf('es') === 0 ? 'es' : 'en'));
   document.querySelectorAll('.lang-seg [data-lang]').forEach(btn => btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang'))));
+})();
+</script>
+
+<!-- Versión y enlaces de descarga en vivo desde la última release de GitHub (con fallback estático) -->
+<script>
+(function(){
+  var REPO = 'Juanjihu/zokkora-dist';
+  fetch('https://api.github.com/repos/' + REPO + '/releases/latest', { headers: { 'Accept': 'application/vnd.github+json' } })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+    .then(function(d){
+      var tag = (d.tag_name || '').replace(/^v/i, '');
+      if (tag) {
+        document.querySelectorAll('[data-ver]').forEach(function(el){
+          el.textContent = el.getAttribute('data-ver').replace('{v}', tag);
+        });
+      }
+      var asset = (d.assets || []).filter(function(a){ return /setup\.exe$/i.test(a.name); })[0];
+      if (asset && asset.browser_download_url) {
+        document.querySelectorAll('a[href*="/releases/latest/download"]').forEach(function(a){
+          a.href = asset.browser_download_url;
+        });
+      }
+    })
+    .catch(function(){ /* sin red o límite de API: quedan el alias y la versión estáticos del HTML */ });
 })();
 </script>
 </body>
