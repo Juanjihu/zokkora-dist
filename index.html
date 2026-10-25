@@ -59,6 +59,7 @@ tailwind.config = {
   @keyframes eq { 0%,100%{ transform: scaleY(.18);} 50%{ transform: scaleY(1);} }
   .wave { display:flex; align-items:center; gap:2px; height:72px; }
   .wave b { display:block; width:3px; border-radius:2px; background:#3a3e49; transition: height .45s cubic-bezier(.2,.8,.2,1), background .3s; }
+  .wave.playing b { transition: height .08s linear; }
   .ab-b .wave b { background: linear-gradient(180deg,#9b6bff,#6d48d6); }
   .reflect { position:relative; border-radius:22px; background:#0f1116; }
   .reflect::before { content:""; position:absolute; inset:0; border-radius:22px; padding:1px;
@@ -401,6 +402,41 @@ tailwind.config = {
   const stage=document.getElementById('ab-stage'), a=document.getElementById('ab-a'), b=document.getElementById('ab-b');
   const name=document.getElementById('ab-name'), lufs=document.getElementById('ab-lufs'), vol=document.getElementById('ab-vol'), peak=document.getElementById('ab-peak'), ready=document.getElementById('ab-ready');
 
+  // Analizador Web Audio: mueve las barras con la señal real mientras suena.
+  let ctx, analyser, srcNode, data, raf;
+  function initAudio(){
+    if (ctx) return true;
+    try {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      srcNode = ctx.createMediaElementSource(player);
+      analyser = ctx.createAnalyser();
+      analyser.fftSize = 128;
+      analyser.smoothingTimeConstant = 0.78;
+      data = new Uint8Array(analyser.frequencyBinCount);
+      srcNode.connect(analyser); analyser.connect(ctx.destination);
+      return true;
+    } catch(e){ ctx = null; return false; }
+  }
+  function animar(){
+    if (!analyser) return;
+    analyser.getByteFrequencyData(data);
+    const bars = w.children;
+    for (let i = 0; i < bars.length; i++){
+      const v = data[i + 2] || 0;           // salta los bins más graves
+      bars[i].style.height = (4 + (v / 255) * 68).toFixed(0) + 'px';
+    }
+    raf = requestAnimationFrame(animar);
+  }
+  function startViz(){
+    w.classList.add('playing');
+    if (initAudio()){ if (ctx.resume) ctx.resume(); cancelAnimationFrame(raf); animar(); }
+  }
+  function stopViz(){
+    w.classList.remove('playing');
+    cancelAnimationFrame(raf);
+    setState(stage.classList.contains('ab-b'));
+  }
+
   function pick(master){
     a.setAttribute('aria-checked', String(!master)); b.setAttribute('aria-checked', String(master));
     a.classList.toggle('text-dim', master); b.classList.toggle('text-dim', !master);
@@ -426,22 +462,26 @@ tailwind.config = {
   const play=document.getElementById('ab-play'), ico=document.getElementById('ab-ico');
   const PLAY='M8 5.5v13l11-6.5z', PAUSE='M7 5h3.5v14H7zM13.5 5H17v14h-3.5z';
 
-  play.onclick=()=>{ 
+  play.onclick=()=>{
     if (player.paused) {
+      initAudio();                 // dentro del gesto del usuario (lo exige el navegador)
       player.play().then(() => {
         ico.innerHTML='<path d="'+PAUSE+'"/>';
         play.setAttribute('aria-label', 'Pause');
+        startViz();
       }).catch(e => console.log('Playback error:', e));
     } else {
       player.pause();
       ico.innerHTML='<path d="'+PLAY+'"/>';
       play.setAttribute('aria-label', 'Play');
+      stopViz();
     }
   };
 
   player.onended = () => {
     ico.innerHTML='<path d="'+PLAY+'"/>';
     play.setAttribute('aria-label', 'Play');
+    stopViz();
   };
 
   window.__abPick = pick; 
