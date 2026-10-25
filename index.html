@@ -82,6 +82,7 @@ tailwind.config = {
     </a>
     <nav class="hidden md:flex items-center gap-7 text-sm text-dim">
       <a href="#features" class="hover:text-ink transition" data-i18n="nav.features">Características</a>
+      <a href="#demo" class="hover:text-ink transition" data-i18n="nav.demo">Video Demo</a>
       <a href="#modulos" class="hover:text-ink transition" data-i18n="nav.modules">Módulos</a>
       <a href="#precio" class="hover:text-ink transition" data-i18n="nav.pricing">Precio</a>
     </nav>
@@ -214,6 +215,35 @@ tailwind.config = {
         <div class="hairline rounded-lg py-2"><div class="tag" data-i18n="ab.m2">Pico real</div><div class="mono text-sm mt-0.5" id="ab-peak">+0.4 dB</div></div>
         <div class="hairline rounded-lg py-2"><div class="tag" data-i18n="ab.m3">Listo para</div><div class="mono text-sm mt-0.5" id="ab-ready">—</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO DEMOSTRACIÓN -->
+<section id="demo" class="max-w-5xl mx-auto px-4 sm:px-6 py-10 lg:py-16">
+  <div class="text-center max-w-2xl mx-auto mb-8">
+    <span class="tag inline-flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-violet inline-block"></span>
+      <span data-i18n="vid.tag">Demostración en video</span>
+    </span>
+    <h2 class="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight" data-i18n="vid.title">
+      Mira Zokkora Suite en acción
+    </h2>
+    <p class="mt-2 text-dim text-[15px] leading-relaxed" data-i18n="vid.sub">
+      De la creación de conceptos y letras con Gemini hasta la descarga, máster a −14 LUFS, stems y distribución directa.
+    </p>
+  </div>
+
+  <div class="win overflow-hidden p-2 sm:p-3 bg-black/40 hairline rounded-2xl shadow-2xl">
+    <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-obsidian">
+      <iframe 
+        class="absolute inset-0 w-full h-full"
+        src="https://www.youtube-nocookie.com/embed/K7nfcqjAQNc?rel=0&modestbranding=1" 
+        title="Zokkora Suite en acción" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 </section>
@@ -365,7 +395,6 @@ tailwind.config = {
     for(let i=0;i<bars.length;i++) bars[i].style.height=vals[i].toFixed(0)+'px';
   }
 
-  // Reproductor nativo para demo-original.wav
   const player = new Audio('demo-original.wav');
   player.loop = true;
 
@@ -383,7 +412,6 @@ tailwind.config = {
     peak.textContent = master?'−1.0 dB':'+0.4 dB';
     ready.textContent = master?'Spotify ✓':'—';
 
-    // Intercambiar archivo .wav conservando la posición de reproducción
     const currentTime = player.currentTime;
     const wasPlaying = !player.paused;
     player.src = master ? 'demo-master.wav' : 'demo-original.wav';
@@ -423,7 +451,7 @@ tailwind.config = {
 /* ---------- i18n ES/EN ---------- */
 const I18N = {
   es: {
-    "nav.features":"Características","nav.modules":"Módulos","nav.pricing":"Precio","nav.cta":"Comprar licencia","nav.try":"Probar gratis (10 temas)","wa.label":"Soporte WhatsApp",
+    "nav.features":"Características","nav.demo":"Video Demo","nav.modules":"Módulos","nav.pricing":"Precio","nav.cta":"Comprar licencia","nav.try":"Probar gratis (10 temas)","wa.label":"Soporte WhatsApp",
     "hero.eyebrow":"Estudio de música IA · Windows",
     "hero.h1a":"Del prompt al máster,","hero.h1b":"en un solo lugar.",
     "hero.sub":"Zokkora crea las canciones con Gemini, las envía a Suno solas y las descarga con su letra. Luego masteriza a −14 LUFS, separa stems, arma portadas, certificados y playlists. Todo en tu PC.",
@@ -436,6 +464,7 @@ const I18N = {
     "ab.sub":"El mismo tema, antes y después del masterizado automático a −14 LUFS. Nivel parejo, listo para Spotify, Apple Music y YouTube.",
     "ab.a":"Original (inconsistente)","ab.b":"Máster Zokkora (−14 LUFS)",
     "ab.m1":"Volumen","ab.m2":"Pico real","ab.m3":"Listo para","ab.vgood":"Parejo","ab.vbad":"Irregular",
+    "vid.tag":"Demostración en video","vid.title":"Mira Zokkora Suite en acción","vid.sub":"De la creación de conceptos y letras con Gemini hasta la descarga, máster a −14 LUFS, stems y distribución directa.",
     "mod.tag":"Un solo programa","mod.title":"Seis módulos, cero complicaciones","mod.sub":"Del concepto a la distribución, sin saltar entre herramientas.",
     "m1.t":"Gemini + Suno, en automático","m1.d":"Eliges el estilo, Gemini inventa al artista y escribe las letras, y Zokkora las crea en Suno por ti: letra, estilos y título. Tú no copias ni pegas nada.",
     "m1.s1":"Estilo","m1.s2":"Letras IA","m1.s3":"Crear en Suno",
@@ -454,7 +483,7 @@ const I18N = {
     "foot.dl":"Descargar","foot.buy":"Comprar","foot.rights":"Hecho para creadores.",
   },
   en: {
-    "nav.features":"Features","nav.modules":"Modules","nav.pricing":"Pricing","nav.cta":"Buy license","nav.try":"Try free (10 tracks)","wa.label":"WhatsApp support",
+    "nav.features":"Features","nav.demo":"Video Demo","nav.modules":"Modules","nav.pricing":"Pricing","nav.cta":"Buy license","nav.try":"Try free (10 tracks)","wa.label":"WhatsApp support",
     "hero.eyebrow":"AI music studio · Windows",
     "hero.h1a":"From prompt to master,","hero.h1b":"in one place.",
     "hero.sub":"Zokkora writes the songs with Gemini, creates them in Suno on its own and downloads them with lyrics. Then it masters to −14 LUFS, splits stems, builds covers, certificates and playlists. All on your PC.",
@@ -467,6 +496,7 @@ const I18N = {
     "ab.sub":"The same track, before and after automatic −14 LUFS mastering. Even level, ready for Spotify, Apple Music and YouTube.",
     "ab.a":"Original (inconsistent)","ab.b":"Zokkora Master (−14 LUFS)",
     "ab.m1":"Volume","ab.m2":"True peak","ab.m3":"Ready for","ab.vgood":"Even","ab.vbad":"Irregular",
+    "vid.tag":"Video Demo","vid.title":"See Zokkora Suite in action","vid.sub":"From prompt generation with Gemini to downloading, −14 LUFS mastering, stems and direct distribution.",
     "mod.tag":"One single app","mod.title":"Six modules, zero friction","mod.sub":"From concept to distribution, without jumping between tools.",
     "m1.t":"Gemini + Suno, automated","m1.d":"Pick a style, Gemini invents the artist and writes the lyrics, and Zokkora creates them in Suno for you: lyrics, styles and title. You copy and paste nothing.",
     "m1.s1":"Style","m1.s2":"AI lyrics","m1.s3":"Create in Suno",
